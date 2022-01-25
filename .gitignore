@@ -1,0 +1,6 @@
+CapstoneWebpage/db.sqlite3
+CapstoneWebpage/geckodriver.log
+CapstoneWebpage/venv
+CapstoneWebpage/**/__pycache__
+CapstoneWebpage/*.pyc
+CapstoneWebpage/static
