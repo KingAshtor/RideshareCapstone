@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+{% block content %}
+    <h1>Register</h1>
+    <form method="post" id="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Username</label>
+            <input class="form-control" type="text" name="name" id="name"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="text" name="password" id="password"/>
+        </div>
+        <div class="form-group">
+            <button onclick="onClick()" id="submit">Submit</button>
+        </div>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        const form = document.getElementById("form")
+        const password = document.getElementById("password")
+        const hash = (str) => {
+            return str.length === 0 ? "" 
+                : CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex)
+        }
+        const onClick = () => {
+            password.value = hash(password.value); form.submit();
+        }
+    </script>
+{% endblock %}
