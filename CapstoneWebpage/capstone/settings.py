@@ -26,7 +26,9 @@ SECRET_KEY = '5a^zgrle8_@zk_+hl*i)vu3)v=6+h@7@-x0i1l^_s!$74d6u^@'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^http:\/\/127.0.0.1:\d+$',
+]
 
 # Application definition
 
