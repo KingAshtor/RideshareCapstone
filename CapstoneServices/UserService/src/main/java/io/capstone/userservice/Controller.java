@@ -6,23 +6,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class Controller {
     private final UserRegistry registry = new UserRegistry();
 
+    public Controller() throws SQLException {
+    }
+
     @RequestMapping(value = "/users/new", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user) {
+    public ResponseEntity<Void> createUser(@RequestBody User user) throws SQLException {
         final boolean result = registry.newUser(user);
         return new ResponseEntity<>(null, result ? HttpStatus.OK : HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "/users/del", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteUser(@RequestParam(value = "name") String name) {
-        final boolean result = registry.delUser(name);
+    public ResponseEntity<Void> deleteUser(@RequestParam(value = "name") String name) throws SQLException  {
+        boolean result = registry.delUser(name);
         return new ResponseEntity<>(null, result ? HttpStatus.OK : HttpStatus.CONFLICT);
     }
 
@@ -40,15 +43,9 @@ public class Controller {
     }
 
     @RequestMapping(value = "/salts/gen", method = RequestMethod.GET)
-    public ResponseEntity<String> generateSalt(@RequestParam(value = "name") String name) {
+    public ResponseEntity<String> generateSalt(@RequestParam(value = "name") String name) throws SQLException {
         final String result = registry.genSalt(name);
         return new ResponseEntity<>(result, result != null ? HttpStatus.OK : HttpStatus.CONFLICT);
-    }
-
-    @RequestMapping(value = "/salts/del", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteSalt(@RequestParam(value = "name") String name) {
-        final boolean result = registry.delSalt(name);
-        return new ResponseEntity<>(null, result ? HttpStatus.OK : HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "/salts/view", method = RequestMethod.GET)

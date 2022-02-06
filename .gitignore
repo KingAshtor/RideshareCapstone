@@ -4,3 +4,4 @@ CapstoneWebpage/venv
 CapstoneWebpage/**/__pycache__
 CapstoneWebpage/*.pyc
 CapstoneWebpage/static
+CapstoneServices/UserService/credentials.txt

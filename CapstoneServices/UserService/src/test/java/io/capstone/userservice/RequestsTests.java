@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -48,7 +49,7 @@ public class RequestsTests {
     public void testDeleteUser() {
         final String name = UUID.randomUUID().toString();
         template.postForEntity("http://localhost:8080/api/users/new", new User(name, "pwd"), User.class);
-        final ResponseEntity<Void> res = template.exchange(String.format("http://localhost:8080/api/users/del?name=%s", name), HttpMethod.DELETE, null, Void.class);
+        final ResponseEntity<Void> res = template.exchange(format("http://localhost:8080/api/users/del?name=%s", name), HttpMethod.DELETE, null, Void.class);
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
 
@@ -60,7 +61,7 @@ public class RequestsTests {
         final String name = UUID.randomUUID().toString();
         final User expectedUser = new User(name, "pwd");
         template.postForEntity("http://localhost:8080/api/users/new", expectedUser, User.class);
-        final ResponseEntity<User> res = template.getForEntity(String.format("http://localhost:8080/api/users/view?name=%s", name), User.class);
+        final ResponseEntity<User> res = template.getForEntity(format("http://localhost:8080/api/users/view?name=%s", name), User.class);
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
         final User actualUser = res.getBody();
@@ -96,7 +97,7 @@ public class RequestsTests {
     @Test
     public void testGenerateSalt() {
         final String name = UUID.randomUUID().toString();
-        final ResponseEntity<String> res = template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
+        final ResponseEntity<String> res = template.getForEntity(format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
 
@@ -107,8 +108,8 @@ public class RequestsTests {
     @Test
     public void testGenerateDuplicateSalt() {
         final String name = UUID.randomUUID().toString();
-        template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        final ResponseEntity<String> res = template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
+        template.getForEntity(format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
+        final ResponseEntity<String> res = template.getForEntity(format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
         int expectedStatus = 409,
                 actualStatus = res.getStatusCode().value();
 
@@ -119,8 +120,8 @@ public class RequestsTests {
     @Test
     public void testDeleteSalt() {
         final String name = UUID.randomUUID().toString();
-        template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        final ResponseEntity<Void> res = template.exchange(String.format("http://localhost:8080/api/salts/del?name=%s", name), HttpMethod.DELETE, null, Void.class);
+        template.getForEntity(format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
+        final ResponseEntity<Void> res = template.exchange(format("http://localhost:8080/api/salts/del?name=%s", name), HttpMethod.DELETE, null, Void.class);
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
 
@@ -130,8 +131,8 @@ public class RequestsTests {
     @Test
     public void testViewSalt() {
         final String name = UUID.randomUUID().toString();
-        template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        final ResponseEntity<String> res = template.getForEntity(String.format("http://localhost:8080/api/salts/view?name=%s", name), String.class);
+        template.getForEntity(format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
+        final ResponseEntity<String> res = template.getForEntity(format("http://localhost:8080/api/salts/view?name=%s", name), String.class);
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
 
