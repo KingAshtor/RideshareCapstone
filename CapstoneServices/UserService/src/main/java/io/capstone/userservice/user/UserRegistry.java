@@ -14,17 +14,32 @@ public class UserRegistry {
     private static final Pattern DB_PATTERN = Pattern.compile("(?<=database: ).+"), NAME_PATTERN = Pattern.compile("(?<=name: ).+"), PASSWORD_PATTERN = Pattern.compile("(?<=password: ).+");
     private static final String CONNECTION_STRING;
     static {
+        CONNECTION_STRING = format("jdbc:sqlserver://masonsql.database.windows.net:1433;database=%s;user=%s;password=%s;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;",
+                db(), name(), password());
+    }
+
+    public static String credentials() {
         String credentials = null; try { credentials = new String(Files.readAllBytes(Paths.get("credentials.txt"))); }
         catch (IOException e) { System.out.println("Could not read credentials from credentials.txt"); System.exit(-1); }
-        final Matcher db = DB_PATTERN.matcher(credentials);
-        final Matcher name = NAME_PATTERN.matcher(credentials);
-        final Matcher password = PASSWORD_PATTERN.matcher(credentials);
+        return credentials;
+    }
 
-        CONNECTION_STRING = format("jdbc:sqlserver://masonsql.database.windows.net:1433;database=%s;user=%s;password=%s;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;",
-                db.find() ? db.group() : "",
-                name.find() ? name.group() : "",
-                password.find() ? password.group() : ""
-        );
+    public static String db() {
+        final String credentials = credentials();
+        final Matcher db = DB_PATTERN.matcher(credentials);
+        return db.find() ? db.group() : "";
+    }
+
+    public static String name() {
+        final String credentials = credentials();
+        final Matcher name = NAME_PATTERN.matcher(credentials);
+        return name.find() ? name.group() : "";
+    }
+
+    public static String password() {
+        final String credentials = credentials();
+        final Matcher password = PASSWORD_PATTERN.matcher(credentials);
+        return password.find() ? password.group() : "";
     }
 
     private final Map<String, String> salts = new HashMap<>();
