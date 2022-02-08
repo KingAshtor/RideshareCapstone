@@ -12,7 +12,7 @@ import static java.lang.String.format;
 
 public class UserRegistry {
     private static final Pattern DB_PATTERN = Pattern.compile("(?<=database: ).+"), NAME_PATTERN = Pattern.compile("(?<=name: ).+"), PASSWORD_PATTERN = Pattern.compile("(?<=password: ).+");
-    private static final String CONNECTION_STRING;
+    public static final String CONNECTION_STRING;
     static {
         CONNECTION_STRING = format("jdbc:sqlserver://masonsql.database.windows.net:1433;database=%s;user=%s;password=%s;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;",
                 db(), name(), password());

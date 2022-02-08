@@ -1,19 +1,28 @@
 package io.capstone.userservice.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
 
-@AllArgsConstructor
+import static java.lang.Math.min;
+
 @NoArgsConstructor
 @Getter
-@Setter
 public class User {
     private String name;
+    @Setter
     private String pwd;
+
+    public void setName(String name) {
+        this.name = name.substring(0, min(name.length(), 16));;
+    }
+
+    public User(String name, String pwd) {
+        setName(name);
+        this.pwd = pwd;
+    }
 
     @Override
     public boolean equals(Object o) {

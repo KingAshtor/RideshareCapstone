@@ -25,12 +25,14 @@ public class Controller {
 
     @RequestMapping(value = "/users/del", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@RequestParam(value = "name") String name) throws SQLException  {
+        name = name.substring(0, Math.min(name.length(), 16));
         boolean result = registry.delUser(name);
         return new ResponseEntity<>(null, result ? HttpStatus.OK : HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "/users/view", method = RequestMethod.GET)
     public ResponseEntity<User> viewUser(@RequestParam(value = "name") String name) {
+        name = name.substring(0, Math.min(name.length(), 16));
         final User user = registry.getUsers().get(name);
         return new ResponseEntity<>(user, user != null ? HttpStatus.OK : HttpStatus.CONFLICT);
     }
@@ -44,12 +46,14 @@ public class Controller {
 
     @RequestMapping(value = "/salts/gen", method = RequestMethod.GET)
     public ResponseEntity<String> generateSalt(@RequestParam(value = "name") String name) throws SQLException {
+        name = name.substring(0, Math.min(name.length(), 16));
         final String result = registry.genSalt(name);
         return new ResponseEntity<>(result, result != null ? HttpStatus.OK : HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "/salts/view", method = RequestMethod.GET)
     public ResponseEntity<String> viewSalt(@RequestParam(value = "name") String name) {
+        name = name.substring(0, Math.min(name.length(), 16));
         final String salt = registry.getSalts().get(name);
         return new ResponseEntity<>(salt, salt == null ? HttpStatus.CONFLICT : HttpStatus.OK);
     }
