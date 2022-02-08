@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/rideShareTxt"
+        android:layout_width="326dp"
+        android:layout_height="169dp"
+        android:gravity="center"
+        android:text="@string/rideshare_is_a_resource_for_ptc_students_to_find_or_provide_rides_for_their_friends_and_classmates_to_and_from_the_school"
+        android:textColor="#004E71"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/signUpBtn"
+        android:layout_width="297dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="466dp"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/signUpBtn"
+        android:text="@string/signUpBtn"
+        android:textColor="#004E71"
+        android:textSize="18sp"
+        app:backgroundTint="#CFD400"
+        app:cornerRadius="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="297dp"
+        android:layout_height="49dp"
+        android:contentDescription="@string/loginBtn"
+        android:text="@string/loginBtn"
+        android:textColor="#004E71"
+        android:textSize="18sp"
+        app:backgroundTint="#CFD400"
+        app:cornerRadius="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.777" />
+
+    <ImageView
+        android:id="@+id/rideShareLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="163dp"
+        android:layout_marginBottom="424dp"
+        android:contentDescription="@string/rideShareLogo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ridesharelogo" />
+
+    <ImageView
+        android:id="@+id/ptcLogoTxt"
+        android:layout_width="312dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="506dp"
+        android:contentDescription="@string/ptcLogoTxt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ptclogo" />
+
+    <ImageView
+        android:id="@+id/linesTop"
+        android:layout_width="340dp"
+        android:layout_height="199dp"
+        android:layout_marginBottom="569dp"
+        android:contentDescription="@string/linesTop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/lines" />
+
+    <ImageView
+        android:id="@+id/linesBottom"
+        android:layout_width="341dp"
+        android:layout_height="185dp"
+        android:layout_marginTop="570dp"
+        android:contentDescription="@string/linesBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/linesbottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
