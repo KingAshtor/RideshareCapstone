@@ -20,7 +20,7 @@ public class UserRegistry {
 
     public static String credentials() {
         String credentials = null; try { credentials = new String(Files.readAllBytes(Paths.get("credentials.txt"))); }
-        catch (IOException e) { System.out.println("Could not read credentials from credentials.txt"); System.exit(-1); }
+        catch (IOException e) { System.out.println("Could not read credentials from credentials.txt"); }
         return credentials;
     }
 
