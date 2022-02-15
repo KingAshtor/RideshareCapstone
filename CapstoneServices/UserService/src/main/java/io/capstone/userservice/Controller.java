@@ -4,53 +4,71 @@ import io.capstone.userservice.user.User;
 import io.capstone.userservice.user.UserRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static java.lang.Math.min;
+import static java.lang.String.format;
 
 @RestController
 @RequestMapping("/api")
 public class Controller {
     private final UserRegistry registry = new UserRegistry();
 
-    public Controller() throws SQLException {
+    @RequestMapping(value="user/put", method=RequestMethod.PUT)
+    public ResponseEntity<String> update(@RequestBody Map<String, Object> fields) {
+        if (!fields.containsKey("usrID") && !fields.containsKey("email")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        final User user = new User(
+                (Integer) fields.get("usrID"),
+                (String) fields.get("email"),
+                (String) fields.get("fName"),
+                (String) fields.get("lName"),
+                (String) fields.get("hashedPwd"),
+                (String) fields.get("salt"));
+        try {
+            registry.updateUser(user);
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } catch (SQLException err) {
+            return new ResponseEntity<>(err.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
-    @RequestMapping(value = "/users/new", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user) throws SQLException {
-        final boolean result = registry.newUser(user);
-        return new ResponseEntity<>(null, result ? HttpStatus.OK : HttpStatus.CONFLICT);
+    @RequestMapping(value="user/del", method=RequestMethod.DELETE)
+    public ResponseEntity<String> delete(@RequestParam(value="id") int id) {
+        try {
+            final User user = registry.userById(id);
+            registry.deleteUser(user);
+            return new ResponseEntity<>(null, user == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+        } catch (SQLException err) {
+            return new ResponseEntity<>(err.getMessage(), HttpStatus.OK);
+        }
     }
 
-    @RequestMapping(value = "/users/del", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteUser(@RequestParam(value = "name") String name) throws SQLException  {
-        boolean result = registry.delUser(name);
-        return new ResponseEntity<>(null, result ? HttpStatus.OK : HttpStatus.CONFLICT);
+    @RequestMapping(value="user/byEmail", method=RequestMethod.GET)
+    public ResponseEntity<User> view(@RequestParam(value="email") String email) throws SQLException {
+        final User user = registry.userByEmail(email);
+
+        return new ResponseEntity<>(user, user == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users/view", method = RequestMethod.GET)
-    public ResponseEntity<User> viewUser(@RequestParam(value = "name") String name) {
-        final User user = registry.getUsers().get(name);
-        return new ResponseEntity<>(user, user != null ? HttpStatus.OK : HttpStatus.CONFLICT);
+    @RequestMapping(value="user/byId", method=RequestMethod.GET)
+    public ResponseEntity<User> view(@RequestParam(value="id") int id) throws SQLException {
+        final User user = registry.userById(id);
+
+        return new ResponseEntity<>(user, user == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users/list", method = RequestMethod.GET)
-    public ResponseEntity<Collection<User>> listUsers() {
-        Collection<User> users = registry.getUsers().values();
-        users = users.size() == 0 ? null : users;
-        return new ResponseEntity<>(users, users == null ? HttpStatus.CONFLICT : HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/salts/gen", method = RequestMethod.GET)
-    public ResponseEntity<String> generateSalt(@RequestParam(value = "name") String name) throws SQLException {
-        final String result = registry.genSalt(name);
-        return new ResponseEntity<>(result, result != null ? HttpStatus.OK : HttpStatus.CONFLICT);
-    }
-
-    @RequestMapping(value = "/salts/view", method = RequestMethod.GET)
-    public ResponseEntity<String> viewSalt(@RequestParam(value = "name") String name) {
-        final String salt = registry.getSalts().get(name);
-        return new ResponseEntity<>(salt, salt == null ? HttpStatus.CONFLICT : HttpStatus.OK);
+    @RequestMapping(value="user/list", method=RequestMethod.GET)
+    public ResponseEntity<List<User>> list() throws SQLException {
+        return new ResponseEntity<>(registry.getUsers(), HttpStatus.OK);
     }
 }
