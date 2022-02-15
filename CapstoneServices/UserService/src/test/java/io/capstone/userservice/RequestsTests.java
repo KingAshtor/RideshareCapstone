@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -24,118 +25,141 @@ public class RequestsTests {
 
     @Test
     public void testCreateUser() {
-        final String name = UUID.randomUUID().toString();
-        final ResponseEntity<User> res = template.postForEntity("http://localhost:8080/api/users/new", new User(name, "pwd"), User.class);
-        int expectedStatus = 200,
-            actualStatus = res.getStatusCode().value();
+        final String email = UUID.randomUUID().toString();
+        final String salt = UUID.randomUUID().toString();
+        final User user = new User(email, salt);
+        final ResponseEntity<String> res = template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(user), String.class);
 
-        assertEquals(expectedStatus, actualStatus);
+        int expectedStatus = 200,
+                actualStatus = res.getStatusCode().value();
+
+        assertEquals(expectedStatus, actualStatus, res.getBody());
     }
 
     @Test
-    public void testCreateDuplicateUser() {
-        final String name = UUID.randomUUID().toString();
-        final User user = new User(name, "pwd");
-        template.postForEntity("http://localhost:8080/api/users/new", user, User.class);
-        final ResponseEntity<User> res = template.postForEntity("http://localhost:8080/api/users/new", user, User.class);
-        int expectedStatus = 409,
-                actualStatus = res.getStatusCode().value();
+    public void testUpdateUser() {
+        final String email = UUID.randomUUID().toString();
+        final String salt = UUID.randomUUID().toString();
+        User user = new User(email, salt);
+        ResponseEntity<String> res = template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(user), String.class);
+        final int expectedStatus = 200;
+        int actualStatus = res.getStatusCodeValue();
+
+        assertEquals(expectedStatus, actualStatus, res.getBody());
+
+        final ResponseEntity<User> userRes = template.getForEntity(format("http://localhost:8080/api/user/byEmail?email=%s", email), User.class);
+        actualStatus = userRes.getStatusCodeValue();
 
         assertEquals(expectedStatus, actualStatus);
+        user = userRes.getBody();
+        assertNotNull(user);
+
+        user.setFName(UUID.randomUUID().toString());
+        user.setLName(UUID.randomUUID().toString());
+
+        final String fName = user.getFName();
+        final String lName = user.getLName();
+
+        res = template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(new User(user.getUsrID(), null, user.getFName(), user.getLName(), null, null)), String.class);
+        actualStatus = res.getStatusCodeValue();
+
+        ResponseEntity<User> updated = template.getForEntity(format("http://localhost:8080/api/user/byEmail?email=%s", user.getEmail()), User.class);
+
+        assertEquals(expectedStatus, actualStatus, res.getBody());
+        assertNotNull(updated.getBody());
+        assertEquals(fName, updated.getBody().getFName());
+        assertEquals(lName, updated.getBody().getLName());
     }
 
     @Test
     public void testDeleteUser() {
-        final String name = UUID.randomUUID().toString();
-        template.postForEntity("http://localhost:8080/api/users/new", new User(name, "pwd"), User.class);
-        final ResponseEntity<Void> res = template.exchange(String.format("http://localhost:8080/api/users/del?name=%s", name), HttpMethod.DELETE, null, Void.class);
-        int expectedStatus = 200,
-                actualStatus = res.getStatusCode().value();
+        final String email = UUID.randomUUID().toString();
+        final String salt = UUID.randomUUID().toString();
+        User user = new User(email, salt);
+        ResponseEntity<String> res = template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(user), String.class);
+        int expectedStatus = 200;
+        int actualStatus = res.getStatusCodeValue();
+
+        assertEquals(expectedStatus, actualStatus);
+
+        final ResponseEntity<User> userRes = template.getForEntity(format("http://localhost:8080/api/user/byEmail?email=%s", email), User.class);
+        actualStatus = userRes.getStatusCodeValue();
+
+        assertEquals(expectedStatus, actualStatus);
+        user = userRes.getBody();
+        assertNotNull(user);
+
+        ResponseEntity<Void> delete = template.exchange(format("http://localhost:8080/api/user/del?id=%d", user.getUsrID()), HttpMethod.DELETE, null, Void.class);
+        actualStatus = delete.getStatusCodeValue();
+
+        assertEquals(expectedStatus, actualStatus);
+
+        ResponseEntity<User> updated = template.getForEntity(format("http://localhost:8080/api/user/byId?id=%d", user.getUsrID()), User.class);
+        expectedStatus = 404;
+        actualStatus = updated.getStatusCodeValue();
 
         assertEquals(expectedStatus, actualStatus);
     }
 
     @Test
     public void testViewUser() {
-        final String name = UUID.randomUUID().toString();
-        final User expectedUser = new User(name, "pwd");
-        template.postForEntity("http://localhost:8080/api/users/new", expectedUser, User.class);
-        final ResponseEntity<User> res = template.getForEntity(String.format("http://localhost:8080/api/users/view?name=%s", name), User.class);
+        final String email = UUID.randomUUID().toString();
+        final User expectedUser = new User(email, UUID.randomUUID().toString());
+        template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(expectedUser), String.class);
+        final ResponseEntity<User> res = template.getForEntity(format("http://localhost:8080/api/user/byEmail?email=%s", email), User.class);
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
         final User actualUser = res.getBody();
 
         assertEquals(expectedStatus, actualStatus);
-        assertEquals(expectedUser, actualUser);
+        assertNotNull(actualUser);
+        assertEquals(expectedUser.getEmail(), actualUser.getEmail());
+        assertEquals(expectedUser.getSalt(), actualUser.getSalt());
     }
 
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void testListUser() {
-        final String name1 = UUID.randomUUID().toString();
-        final String name2 = UUID.randomUUID().toString();
-        final User user1 = new User(name1, "pwd");
-        final User user2 = new User(name2, "pwd");
-        template.postForEntity("http://localhost:8080/api/users/new", user1, User.class);
-        template.postForEntity("http://localhost:8080/api/users/new", user2, User.class);
-        final ResponseEntity<Collection> res = template.getForEntity("http://localhost:8080/api/users/list", Collection.class);
+        final String email1 = UUID.randomUUID().toString();
+        final String email2 = UUID.randomUUID().toString();
+        User user1 = new User(email1, UUID.randomUUID().toString());
+        User user2 = new User(email2, UUID.randomUUID().toString());
+        template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(user1), String.class);
+        template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(user2), String.class);
+        final ResponseEntity<Collection> res = template.getForEntity("http://localhost:8080/api/user/list", Collection.class);
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
+
+        //Update both users to obtain ids
+
+        assertEquals(expectedStatus, actualStatus);
+
+        ResponseEntity<User> userRes = template.getForEntity(format("http://localhost:8080/api/user/byEmail?email=%s", email1), User.class);
+        actualStatus = userRes.getStatusCodeValue();
+
+        assertEquals(expectedStatus, actualStatus);
+        user1 = userRes.getBody();
+        assertNotNull(user1);
+
+        assertEquals(expectedStatus, actualStatus);
+
+        userRes = template.getForEntity(format("http://localhost:8080/api/user/byEmail?email=%s", email2), User.class);
+        actualStatus = userRes.getStatusCodeValue();
+
+        assertEquals(expectedStatus, actualStatus);
+        user2 = userRes.getBody();
+        assertNotNull(user1);
+
+        //end updating
 
         assertEquals(expectedStatus, actualStatus);
         assertNotNull(res.getBody());
 
-        final List<User> users = new ArrayList<>((Collection<LinkedHashMap<String, String>>) res.getBody())
-                .stream().map(map -> new User(map.get("name"), map.get("hashedPwd"))).collect(Collectors.toList());
+        final List<User> users = new ArrayList<>((Collection<LinkedHashMap<String, Object>>) res.getBody())
+                .stream().map(map -> new User((Integer) map.get("usrID"), (String) map.get("email"), null, null, null, (String) map.get("salt"))).collect(Collectors.toList());
+
         final boolean contains = users.containsAll(Arrays.asList(user1, user2));
 
-        assertEquals(expectedStatus, actualStatus);
         assertTrue(contains, "Response does not contain the two inserted users.");
-    }
-
-    @Test
-    public void testGenerateSalt() {
-        final String name = UUID.randomUUID().toString();
-        final ResponseEntity<String> res = template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        int expectedStatus = 200,
-                actualStatus = res.getStatusCode().value();
-
-        assertEquals(expectedStatus, actualStatus);
-        assertNotNull(res.getBody());
-    }
-
-    @Test
-    public void testGenerateDuplicateSalt() {
-        final String name = UUID.randomUUID().toString();
-        template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        final ResponseEntity<String> res = template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        int expectedStatus = 409,
-                actualStatus = res.getStatusCode().value();
-
-        assertEquals(expectedStatus, actualStatus);
-        assertNull(res.getBody());
-    }
-
-    @Test
-    public void testDeleteSalt() {
-        final String name = UUID.randomUUID().toString();
-        template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        final ResponseEntity<Void> res = template.exchange(String.format("http://localhost:8080/api/salts/del?name=%s", name), HttpMethod.DELETE, null, Void.class);
-        int expectedStatus = 200,
-                actualStatus = res.getStatusCode().value();
-
-        assertEquals(expectedStatus, actualStatus);
-    }
-
-    @Test
-    public void testViewSalt() {
-        final String name = UUID.randomUUID().toString();
-        template.getForEntity(String.format("http://localhost:8080/api/salts/gen?name=%s", name), String.class);
-        final ResponseEntity<String> res = template.getForEntity(String.format("http://localhost:8080/api/salts/view?name=%s", name), String.class);
-        int expectedStatus = 200,
-                actualStatus = res.getStatusCode().value();
-
-        assertEquals(expectedStatus, actualStatus);
-        assertNotNull(res.getBody());
     }
 }
