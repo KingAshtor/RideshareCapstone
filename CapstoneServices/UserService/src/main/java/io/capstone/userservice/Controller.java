@@ -4,19 +4,11 @@ import io.capstone.userservice.user.User;
 import io.capstone.userservice.user.UserRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import static java.lang.Math.min;
-import static java.lang.String.format;
 
 @RestController
 @RequestMapping("/api")
@@ -56,14 +48,12 @@ public class Controller {
     @RequestMapping(value="user/byEmail", method=RequestMethod.GET)
     public ResponseEntity<User> view(@RequestParam(value="email") String email) throws SQLException {
         final User user = registry.userByEmail(email);
-
         return new ResponseEntity<>(user, user == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
     @RequestMapping(value="user/byId", method=RequestMethod.GET)
     public ResponseEntity<User> view(@RequestParam(value="id") int id) throws SQLException {
         final User user = registry.userById(id);
-
         return new ResponseEntity<>(user, user == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 

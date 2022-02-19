@@ -29,7 +29,6 @@ public class RequestsTests {
         final String salt = UUID.randomUUID().toString();
         final User user = new User(email, salt);
         final ResponseEntity<String> res = template.exchange("http://localhost:8080/api/user/put", HttpMethod.PUT, new HttpEntity<>(user), String.class);
-
         int expectedStatus = 200,
                 actualStatus = res.getStatusCode().value();
 
