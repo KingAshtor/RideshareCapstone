@@ -107,7 +107,9 @@ public class UserRegistry {
         final List<User> users = new ArrayList<>();
 
         while (res.next()) {
-            users.add(userById(res.getInt("usrID")));
+            User user = userById(res.getInt("usrID"));
+            user.setRoles(roles(user.getUsrID()));
+            users.add(user);
         }
 
         return users;
@@ -134,7 +136,41 @@ public class UserRegistry {
 
         if (usrID == null) return null;
 
-        return new User(usrID, email, fName, lName, hashedPwd, salt);
+        return new User(usrID, email, fName, lName, hashedPwd, salt, null) {{
+            setRoles(roles(this.getUsrID()));
+        }};
+    }
+
+    public void addRole(Integer id, String role) throws SQLException {
+        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
+        final Statement stmt = con.createStatement();
+        stmt.execute(format("INSERT INTO Rideshare.Role VALUES (%d, '%s')", id, role));
+    }
+
+    public void deleteRole(Integer id, String role) throws SQLException {
+        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
+        final Statement stmt = con.createStatement();
+        stmt.execute(format("DELETE FROM Rideshare.Role WHERE UsrID = %d and value = '%s'", id, role));
+    }
+
+    public Set<String> roles(Integer id) throws SQLException {
+        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
+        final Statement stmt = con.createStatement();
+        final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Role");
+        final Set<String> roles = new HashSet<>();
+
+        if (id == null) return roles;
+
+        int foundId;
+        while(res.next()) {
+            foundId = res.getInt("UsrID");
+
+            if (id == foundId) {
+                roles.add(res.getString("value"));
+            }
+        }
+
+        return roles;
     }
 
     @Getter

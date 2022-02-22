@@ -28,11 +28,9 @@ def login(req):
     this = render(req, "login.html", context)
 
     if (req.method == "POST"):
-        email = req.POST["email"]
-        if (not EMAIL_PATTERN.match(email) or email == ""): return this
+        info = email, simple_hash = user_info(req)
 
-        simple_hash = req.POST["password"]
-        if (simple_hash == ""): return this
+        if (info == None): return this
 
         res = requests.get(f"http://127.0.0.1:8080/api/user/byEmail?email={email}")
         json = res.json()
@@ -58,14 +56,10 @@ def register(req):
     this = render(req, "register.html", context)
 
     if (req.method == "POST"):
-        email = req.POST["email"]
-        if (not EMAIL_PATTERN.match(email) or email == ""): 
-            return this
+        info = email, simple_hash = user_info(req)
 
-        simple_hash = req.POST["password"]
-        if (simple_hash == ""):
-            return this
-
+        if (info == None): return this
+        
         res = requests.get(f"http://127.0.0.1:8080/api/user/byEmail?email={email}")
 
         if (res.status_code != 404):
@@ -86,6 +80,17 @@ def register(req):
         return redirect("home")
 
     return this
+
+def user_info(req):
+    email = req.POST["email"]
+    if (not EMAIL_PATTERN.match(email) or email == ""): 
+        return None
+
+    simple_hash = req.POST["password"]
+    if (simple_hash == ""):
+        return None
+
+    return email, simple_hash
 
 def logged_in(req):
     return "email" in req.session
