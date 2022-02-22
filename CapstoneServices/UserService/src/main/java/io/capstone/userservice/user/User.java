@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -18,23 +20,18 @@ public class User {
     @JsonProperty("lName")
     private String lName;
     private String hashedPwd, salt;
+    @Setter
+    private Set<String> roles = new HashSet<>();
 
-    public User(String email, String salt) {
-        this.usrID = null;
-        setEmail(email);
-        this.fName = null;
-        this.lName = null;
-        this.hashedPwd = null;
-        setSalt(salt);
-    }
-
-    public User(Integer usrID, String email, String fName, String lName, String hashedPwd, String salt) {
+    public User(Integer usrID, String email, String fName, String lName, String hashedPwd, String salt, Set<String> roles) {
         this.usrID = usrID;
         setEmail(email);
         setFName(fName);
         setLName(lName);
         setHashedPwd(hashedPwd);
         setSalt(salt);
+        if (roles != null)
+            this.roles = roles;
     }
 
     @JsonProperty("fName")
@@ -72,6 +69,14 @@ public class User {
     public void setSalt(String salt) {
         if (salt != null && salt.length() != 36) this.salt = null;
         else this.salt = salt;
+    }
+
+    public void addRole(String role) {
+        roles.add(role);
+    }
+
+    public void removeRole(String role) {
+        roles.removeIf(role::equals);
     }
 
     @Override

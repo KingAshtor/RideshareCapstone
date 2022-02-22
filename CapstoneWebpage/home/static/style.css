@@ -1,0 +1,22 @@
+.limit-header-size-lg {
+    width: 20vw
+}
+
+.limit-header-size-sm {
+    width: 10vw
+}
+
+.text-ptc {
+    color: rgb(0, 89, 132)
+}
+
+.btn-ptc, 
+.btn-ptc:active, 
+.btn-ptc:visited {
+    background-color: rgb(207, 212, 0) !important;
+    color: rgb(0, 89, 132) !important;
+}
+
+.btn-ptc:hover {
+    background-color: rgb(197, 201, 0) !important;
+}
