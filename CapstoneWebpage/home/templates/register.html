@@ -1,32 +1,139 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% block title %}Register{% endblock %}
 {% block content %}
-    <h1>Register</h1>
-    <form method="post" id="form">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input class="form-control" type="text" name="email" id="email"/>
+<br>
+<div class="container p-0">
+    <div class="row justify-content-center">
+        <img src="{% static 'ptc.svg' %}" style="min-width: 75px; width: 20vw;"/>
+    </div>
+    <div class="row justify-content-center">
+        <img src="{% static 'logo.svg' %}" style="min-width: 75px; width: 20vw;" />
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h1 class="text-center text-ptc">CREATE AN ACCOUNT</h1>
+            <form method="post" id="form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="text-ptc" for="first">First Name</label>
+                    <input class="form-control form-control-sm" type="text" name="first" id="first"/>
+                </div>
+                <div class="form-group">
+                    <label class="text-ptc" for="last">Last Name</label>
+                    <input class="form-control form-control-sm" type="text" name="last" id="last"/>
+                </div>
+                <div class="form-group">
+                    <label class="text-ptc" for="email">Email</label>
+                    <input class="form-control form-control-sm" type="text" name="email" id="email"/>
+                </div>
+                <div class="form-group">
+                    <label class="text-ptc" for="address">Address</label>
+                    <input class="form-control form-control-sm" type="text" name="address" id="address"/>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label class="text-ptc" for="city">City</label>
+                        <input class="form-control form-control-sm" type="text" name="city" id="city"/>
+                    </div>
+                    <div class="col">
+                        <label class="text-ptc" for="state">State</label>
+                        <input class="form-control form-control-sm" type="text" name="state" id="state"/>
+                    </div>
+                </div>
+            
+                <br>
+            
+                <h4 class="text-center text-ptc">Will You</h4>
+                <div class="form-group row">
+                    <div class="text-center">
+                        <input type="checkbox" name="driver" id="driver" value="driver">
+                        <label class="text-ptc" for="driver">Give a Ride</label>
+                    </div>
+                    <div class="text-center">
+                        <input type="checkbox" name="rider" id="rider" value="rider">
+                        <label class="text-ptc" for="rider">Need a Ride</label>
+                    </div>
+                </div>
+                
+                <h4 class="text-center text-ptc">Eating Preference</h4>
+                <div class="form-group row">
+                    <div class="text-center">
+                        <input type="radio" name="eat" id="eater" value="eater">
+                        <label class="text-ptc" for="eater">I eat in the car</label>
+                    </div>
+            
+                    <div class="text-center">
+                        <input type="radio" name="eat" id="noneater" value="noneater">
+                        <label class="text-ptc" for="noneater">I don't eat in the car</label>
+                    </div>
+            
+                    <div class="text-center">
+                        <input type="radio" name="eat" id="anyeater" value="anyeater" checked>
+                        <label class="text-ptc" for="anyeater">No preference</label>
+                    </div>
+                </div>
+                
+                <h4 class="text-center text-ptc">Smoking Preference</h4>
+                <div class="form-group row">
+                    <div class="text-center">
+                        <input type="radio" name="smoke" id="smoker" value="smoker">
+                        <label class="text-ptc" for="smoker">I smoke in the car</label>
+                    </div>
+            
+                    <div class="text-center">
+                        <input type="radio" name="smoke" id="nonsmoker" value="nonsmoker">
+                        <label class="text-ptc" for="rider">No smoking in the car</label>
+                    </div>
+            
+                    <div class="text-center">
+                        <input type="radio" name="smoke" id="anysmoker" value="anysmoker" checked>
+                        <label class="text-ptc" for="rider">No preference</label>
+                    </div>
+                </div>
+            
+                <br>
+            
+                <div class="form-group">
+                    <label class="text-ptc" for="password">Password</label>
+                    <input class="form-control form-control-sm" type="text" name="password" id="password"/>
+                </div>
+                <div class="form-group">
+                    <label class="text-ptc" for="confirm">Confirm Password</label>
+                    <input class="form-control form-control-sm" type="text" name="confirm" id="confirm"/>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" type="text" name="password" id="password"/>
+    </div>
+</div>
+<br>
+<div class="container-fluid m-0 p-0">
+    <div class="row m-0 p-0"> 
+        <div class="col-3 p-0 m-0 align-self-center">
+            <img src="{% static 'left.svg' %}"/>
         </div>
-        <div class="form-group">
-            <button onclick="onClick()" id="submit">Submit</button>
+        <div class="col-6 p-0 m-0">
+            <button class="btn btn-lg btn-ptc form-control" onclick="onClick()" id="submit"><b>SUBMIT</b></button>
         </div>
-    </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script>
-        const form = document.getElementById("form")
-        const password = document.getElementById("password")
-        const hash = (str) => {
-            return str.length === 0 ? "" 
-                : CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex)
-        }
-        const onClick = () => {
-            password.value = hash(password.value); form.submit();
-        }
-    </script>
+        <div class="col-3 p-0 m-0 align-self-center">
+            <img src="{% static 'right.svg' %}" style="transform: scaleY(-1);"/>
+        </div>
+    </div>
+</div>
+<br>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script>
+    const form = document.getElementById("form")
+    const password = document.getElementById("password")
+    const confirmPassword = document.getElementById("confirm")
+    const driver = document.getElementById("driver")
+    const rider = document.getElementById("rider")
+    const hash = (str) => { return str.length === 0 ? "" : CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex) }
+    const onClick = () => { if (password.value == confirmPassword.value) { password.value = hash(password.value); form.submit() } }
+</script>
+
 {% endblock %}

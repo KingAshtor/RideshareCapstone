@@ -1,5 +1,6 @@
 package io.capstone.userservice.user;
 
+import io.capstone.userservice.Database;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,169 +9,178 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static io.capstone.userservice.Database.CONNECTION_STRING;
 import static java.lang.String.format;
 
 public class UserRegistry {
-    private static final Pattern DB_PATTERN = Pattern.compile("(?<=database: ).+"), NAME_PATTERN = Pattern.compile("(?<=name: ).+"), PASSWORD_PATTERN = Pattern.compile("(?<=password: ).+");
-    public static final String CONNECTION_STRING;
-    static {
-        CONNECTION_STRING = format("jdbc:sqlserver://funnyserver.database.windows.net:1433;database=%s;user=%s;password=%s;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;",
-                db(), name(), password());
-    }
+    private final Database database = new Database();
 
-    public static String credentials() {
-        String credentials = null; try { credentials = new String(Files.readAllBytes(Paths.get("credentials.txt"))); }
-        catch (IOException e) { System.out.println("Could not read credentials from credentials.txt"); System.exit(-1); }
-        return credentials;
-    }
-
-    public static String db() {
-        final Matcher db = DB_PATTERN.matcher(credentials());
-        return db.find() ? db.group() : "";
-    }
-
-    public static String name() {
-        final Matcher name = NAME_PATTERN.matcher(credentials());
-        return name.find() ? name.group() : "";
-    }
-
-    public static String password() {
-        final Matcher password = PASSWORD_PATTERN.matcher(credentials());
-        return password.find() ? password.group() : "";
-    }
-
-    public User userByEmail(String searchEmail) throws SQLException {
-        return getUser(stmt -> {
-            try { return stmt.executeQuery(format("SELECT * FROM Rideshare.Usr WHERE email = '%s'", searchEmail)); }
-            catch (SQLException ignored) {} return null;
+    public User userByEmail(String email) throws SQLException {
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery(format("SELECT * FROM Rideshare.Usr WHERE email = '%s'", email));
+            res.next();
+            return user(res);
         });
     }
 
     public User userById(int usrID) throws SQLException {
-        return getUser(stmt -> {
-            try { return stmt.executeQuery(format("SELECT * FROM Rideshare.Usr WHERE usrID = %s", usrID)); }
-            catch (SQLException ignored) {} return null;
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery(format("SELECT * FROM Rideshare.Usr WHERE usrID = %d", usrID));
+            res.next();
+            return user(res);
         });
     }
 
     public void updateUser(User user) throws SQLException {
         if (user.getUsrID() == null && user.getEmail() == null) return;
 
-        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
-        final Statement stmt = con.createStatement();
+        database.consumer(database.connection(), stmt -> {
+            final String
+                    email = nullToEmpty(user.getEmail()),
+                    fName = nullToEmpty(user.getFName()),
+                    lName = nullToEmpty(user.getLName()),
+                    hashedPwd = nullToEmpty(user.getHashedPwd()),
+                    salt = nullToEmpty(user.getSalt());
+            if (!hasUserById(user.getUsrID())
+                    && !hasUserByEmail(user.getEmail())) {
+                stmt.execute(format("INSERT INTO Rideshare.Usr VALUES ('%s', '%s', '%s', '%s', '%s', 0, 0)", email, fName, lName, hashedPwd, salt));
+            } else {
+                if (user.getUsrID() == null)
+                    user.setUsrID(userByEmail(user.getEmail()).getUsrID());
+                final List<Pair> entries = Arrays.asList(Pair.of("email", email), Pair.of("fName", fName), Pair.of("lName", lName), Pair.of("hashedPwd", hashedPwd), Pair.of("salt", salt));
+                final String setEntries = entries.stream()
+                        .filter(pair -> !"".equals(pair.value))
+                        .map(pair -> format("%s = '%s'", pair.col, pair.value))
+                        .collect(Collectors.joining(", "));
 
-        String email = user.getEmail(); email = email == null ? "" : email;
-        String fName = user.getFName(); fName = fName == null ? "" : fName;
-        String lName = user.getLName(); lName = lName == null ? "" : lName;
-        String hashedPwd = user.getHashedPwd(); hashedPwd = hashedPwd == null ? "" : hashedPwd;
-        String salt = user.getSalt(); salt = salt == null ? "" : salt;
-
-        if ((user.getUsrID() == null
-                ? userByEmail(user.getEmail())
-                : userById(user.getUsrID())) == null) {
-            stmt.execute(format("INSERT INTO Rideshare.Usr VALUES ('%s', '%s', '%s', '%s', '%s', 0, 0)", email, fName, lName, hashedPwd, salt));
-        } else {
-            if (user.getUsrID() == null)
-                user.setUsrID(userByEmail(user.getEmail()).getUsrID());
-
-            final List<Pair> entries = Arrays.asList(Pair.of("email", email), Pair.of("fName", fName), Pair.of("lName", lName), Pair.of("hashedPwd", hashedPwd), Pair.of("salt", salt));
-            final String setEntries = entries.stream()
-                    .filter(pair -> !"".equals(pair.value))
-                    .map(pair -> format("%s = '%s'", pair.col, pair.value))
-                    .collect(Collectors.joining(", "));
-
-            stmt.execute(format("UPDATE Rideshare.Usr SET %s", setEntries));
-        }
+                stmt.execute(format("UPDATE Rideshare.Usr SET %s", setEntries));
+            }
+        });
     }
 
-    public void deleteUser(User user) throws SQLException {
-        if (user == null) return;
+    public void deleteUserById(int id) throws SQLException {
+        final String where = format("usrID = %d", id);
+        database
+                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Role WHERE %s", where)))
+                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Usr WHERE %s", where)));
+    }
 
-        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
-        final Statement stmt = con.createStatement();
-        final String where = user.getUsrID() == null
-                ? format("email = '%s'", user.getEmail())
-                : format("usrID = %s", user.getUsrID());
-        stmt.execute(format("DELETE FROM Rideshare.Usr WHERE %s", where));
+    public void deleteUserByEmail(String email) throws SQLException {
+        final String where = format("email = '%s'", email);
+        database
+                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Role WHERE %s", where)))
+                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Usr WHERE %s", where)));
     }
 
     public List<User> getUsers() throws SQLException {
-        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
-        final Statement statement = con.createStatement();
-        final ResultSet res = statement.executeQuery("SELECT * FROM Rideshare.Usr");
-        final List<User> users = new ArrayList<>();
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Usr");
+            final List<User> users = new ArrayList<>();
 
-        while (res.next()) {
-            User user = userById(res.getInt("usrID"));
-            user.setRoles(roles(user.getUsrID()));
-            users.add(user);
-        }
+            while (res.next()) {
+                final User user = user(res);
+                users.add(user);
+            }
 
-        return users;
+            return users;
+        });
     }
 
-    private User getUser(Function<Statement, ResultSet> getResults) throws SQLException {
-        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
-        final Statement stmt = con.createStatement();
-        final ResultSet res = getResults.apply(stmt);
+    public void addRole(Integer id, String role) throws SQLException {
+        database.consumer(database.connection(), stmt ->
+                stmt.execute(format("INSERT INTO Rideshare.Role VALUES (%d, '%s')", id, role)));
+    }
 
-        Integer usrID = null;
-        String email = null;
-        String fName = null, lName = null;
-        String hashedPwd = null, salt = null;
+    public void addRole(String email, String role) throws SQLException {
+        database.consumer(database.connection(), stmt ->
+                stmt.execute(format("INSERT INTO Rideshare.Role VALUES (%d, '%s')", id(email), role)));
+    }
 
-        while(res.next()) {
-            usrID = res.getInt("usrID");
-            email = res.getString("email"); email = email.length() == 0 ? null : email;
-            fName = res.getString("fName"); fName = fName.length() == 0 ? null : fName;
-            lName = res.getString("lName"); lName = lName.length() == 0 ? null : lName;
-            hashedPwd = res.getString("hashedPwd"); hashedPwd = hashedPwd.length() == 0 ? null : hashedPwd;
-            salt = res.getString("salt"); salt = salt.length() == 0 ? null : salt;
-        }
+    public void deleteRole(Integer id, String role) throws SQLException {
+        database.consumer(database.connection(), stmt ->
+                stmt.execute(format("DELETE FROM Rideshare.Role WHERE UsrID = %d and value = '%s'", id, role)));
+    }
 
-        if (usrID == null) return null;
+    public void deleteRole(String email, String role) throws SQLException {
+        database.consumer(database.connection(), stmt ->
+                stmt.execute(format("DELETE FROM Rideshare.Role WHERE UsrID = %d and value = '%s'", id(email), role)));
+    }
 
+    public boolean hasUserById(Integer id) throws SQLException {
+        if (id == null) return false;
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Usr");
+            while(res.next()) {
+                if (id == res.getInt("usrID")) return true;
+            }
+            return false;
+        });
+    }
+
+    public boolean hasUserByEmail(String email) throws SQLException {
+        if (email == null) return false;
+
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Usr");
+            while(res.next()) {
+                if (email.equals(res.getString("email"))) return true;
+            }
+            return false;
+        });
+    }
+
+    public Set<String> roles(Integer id) throws SQLException {
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Role");
+            final Set<String> roles = new HashSet<>();
+
+            while (res.next()) {
+                final int foundId = res.getInt("UsrID");
+                if (foundId == id)
+                    roles.add(res.getString("value"));
+            }
+
+            return roles;
+        });
+    }
+
+    public int id(String email) throws SQLException {
+        if (email == null) return -1;
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Usr");
+            while(res.next()) {
+                if (email.equals(res.getString("email"))) return res.getInt("usrID");
+            }
+            return -1;
+        });
+    }
+
+    private User user(ResultSet res) throws SQLException {
+        final Integer usrID = value(res, () -> res.getInt("usrID"));
+        final String
+                email = value(res, () -> res.getString("email")),
+                fName = value(res, () -> res.getString("fName")),
+                lName = value(res, () -> res.getString("lName")),
+                hashedPwd = value(res, () -> res.getString("hashedPwd")),
+                salt = value(res, () -> res.getString("salt"));
         return new User(usrID, email, fName, lName, hashedPwd, salt, null) {{
             setRoles(roles(this.getUsrID()));
         }};
     }
 
-    public void addRole(Integer id, String role) throws SQLException {
-        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
-        final Statement stmt = con.createStatement();
-        stmt.execute(format("INSERT INTO Rideshare.Role VALUES (%d, '%s')", id, role));
+    private <T> T value(ResultSet res, Database.DataReturning<T> function) throws SQLException {
+        return res.wasNull() ? null : function.process();
     }
 
-    public void deleteRole(Integer id, String role) throws SQLException {
-        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
-        final Statement stmt = con.createStatement();
-        stmt.execute(format("DELETE FROM Rideshare.Role WHERE UsrID = %d and value = '%s'", id, role));
-    }
-
-    public Set<String> roles(Integer id) throws SQLException {
-        final Connection con = DriverManager.getConnection(CONNECTION_STRING);
-        final Statement stmt = con.createStatement();
-        final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Role");
-        final Set<String> roles = new HashSet<>();
-
-        if (id == null) return roles;
-
-        int foundId;
-        while(res.next()) {
-            foundId = res.getInt("UsrID");
-
-            if (id == foundId) {
-                roles.add(res.getString("value"));
-            }
-        }
-
-        return roles;
+    private String nullToEmpty(String value) {
+        return value == null ? "" : value;
     }
 
     @Getter

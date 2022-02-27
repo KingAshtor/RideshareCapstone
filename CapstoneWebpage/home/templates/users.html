@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load custom_tags %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<form method="POST" id="form">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="hidden" id="type" name="type">
+        <input type="hidden" id="search" name="search">
+        <input type="hidden" id="email" name="email">
+    </div>
+</form>
+
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8">
+                        <input class="form-control form-control-sm" id="searchtxt" type="text" placeholder="Search...">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-sm btn-ptc" id="submitsearch" onclick="document.getElementById('type').value = 'search'; document.getElementById('search').value = document.getElementById('searchtxt').value; document.getElementById('form').submit();">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container-fluid">
+    {% for user in users %}
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ "fName"|value:user }} {{ "lName"|value:user }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ "email"|value:user }}</h6>
+                        <div>
+                            {% for role in "roles"|value:user %}
+                                <small class="text-nowrap rounded px-1 bg-ptc text-ptc">{{role|tag}}</small>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <button class="btn btn-sm btn-ptc" id="submitdelete" onclick="document.getElementById('type').value = 'delete'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Delete</button>
+                        
+                        {% if "admin" not in "roles"|value:user %}
+                            <button class="btn btn-sm btn-ptc" id="submitpromote" onclick="document.getElementById('type').value = 'promote'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Promote</button>
+                        {% elif "admin" in "roles"|value:user %}
+                            <button class="btn btn-sm btn-ptc" id="submitdemote" onclick="document.getElementById('type').value = 'demote'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Demote</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+</div>
+
+{% endblock %}

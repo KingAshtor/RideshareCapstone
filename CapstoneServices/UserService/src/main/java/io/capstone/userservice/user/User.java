@@ -71,14 +71,6 @@ public class User {
         else this.salt = salt;
     }
 
-    public void addRole(String role) {
-        roles.add(role);
-    }
-
-    public void removeRole(String role) {
-        roles.removeIf(role::equals);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
