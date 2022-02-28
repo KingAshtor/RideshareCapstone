@@ -1,13 +1,57 @@
 .limit-header-size-lg {
-    width: 20vw
+    width: 20vw;
 }
 
 .limit-header-size-sm {
-    width: 10vw
+    width: 10vw;
 }
 
 .text-ptc {
-    color: rgb(0, 89, 132)
+    color: rgb(0, 89, 132) !important;
+}
+
+.bg-ptc {
+    background-color: rgb(207, 212, 0) !important;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: 0.8em !important;
+    height: 0.8em !important;
+    background-color: white !important;
+    border-radius: 25% !important;
+    vertical-align: baseline !important;
+    border: 3px solid rgb(0, 89, 132) !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    outline: none !important;
+}
+
+input[type="checkbox"]:hover,
+input[type="radio"]:hover {
+    border: 3px solid rgb(0, 69, 104) !important;
+}
+
+input[type="checkbox"]:checked::before,
+input[type="radio"]:checked::before {
+    content: "" !important;
+    position: relative !important;
+    display: block !important;
+    top: -1px !important;
+    left: -1px !important;
+    width: 9px !important;
+    height: 9px !important;
+    clip-path: circle(2px at 50% 50%) !important;
+    background-color: rgb(207, 212, 0) !important;
+}
+
+input[type="text"],
+input[type="text"]:focus {
+    box-shadow: none;
+    outline: 0 !important;
+    border: 0 !important;
+    background-color: rgb(220, 216, 215) !important;
+    color: rgb(0, 89, 132) !important;
 }
 
 .btn-ptc, 

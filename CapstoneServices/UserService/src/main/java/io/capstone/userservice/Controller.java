@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -35,30 +34,44 @@ public class Controller {
 
     @RequestMapping(value="roles/add/byId", method=RequestMethod.POST)
     public ResponseEntity<Void> addRole(@RequestParam(value="id") int id, @RequestParam(value="role") String role) throws SQLException {
-        System.out.println("nerd");
-        if (!registry.getUsers().stream().map(User::getUsrID).collect(Collectors.toSet()).contains(id)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        registry.addRole(id, role);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        final boolean has = registry.hasUserById(id);
+        if (has) registry.addRole(id, role);
+        return new ResponseEntity<>(null, has ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value="roles/add/byEmail", method=RequestMethod.POST)
+    public ResponseEntity<Void> addRole(@RequestParam(value="email") String email, @RequestParam(value="role") String role) throws SQLException {
+        final boolean has = registry.hasUserByEmail(email);
+        if (has) registry.addRole(email, role);
+        return new ResponseEntity<>(null, has ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value="roles/del/byId", method=RequestMethod.DELETE)
     public ResponseEntity<Void> deleteRole(@RequestParam(value="id") int id, @RequestParam(value="role") String role) throws SQLException {
-        if (!registry.getUsers().stream().map(User::getUsrID).collect(Collectors.toSet()).contains(id)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        registry.deleteRole(id, role);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        final boolean has = registry.hasUserById(id);
+        if (has) registry.deleteRole(id, role);
+        return new ResponseEntity<>(null, has ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-//    @RequestMapping(value="roles/has/byId", method=RequestMethod.DELETE)
-//    public ResponseEntity<Void> hasRole(@RequestParam(value="id") int id, @RequestParam(value="role") String role) throws SQLException {
-//        if (!registry.getUsers().stream().map(User::getUsrID).collect(Collectors.toSet()).contains(id)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-//        return new ResponseEntity<>(null, registry.roles(id).contains(role) ? HttpStatus.FOUND : HttpStatus.NOT_FOUND);
-//    }
+    @RequestMapping(value="roles/del/byEmail", method=RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteRole(@RequestParam(value="email") String email, @RequestParam(value="role") String role) throws SQLException {
+        final boolean has = registry.hasUserByEmail(email);
+        if (has) registry.deleteRole(email, role);
+        return new ResponseEntity<>(null, has ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
 
     @RequestMapping(value="user/del/byId", method=RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@RequestParam(value="id") int id) throws SQLException {
-        final User user = registry.userById(id);
-        registry.deleteUser(user);
-        return new ResponseEntity<>(null, user == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+        final boolean has = registry.hasUserById(id);
+        if (has) registry.deleteUserById(id);
+        return new ResponseEntity<>(null, has ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value="user/del/byEmail", method=RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@RequestParam(value="email") String email) throws SQLException {
+        final boolean has = registry.hasUserByEmail(email);
+        if (has) registry.deleteUserByEmail(email);
+        return new ResponseEntity<>(null, has ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value="user/byEmail", method=RequestMethod.GET)

@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from .base import FunctionalTest
+from functional_tests.base import FunctionalTest
 
 class RegisterTest(FunctionalTest):
     def test_register_duplicate(self):
@@ -20,14 +20,12 @@ class RegisterTest(FunctionalTest):
         self.browser.find_element(By.ID, "password").send_keys(password)
         time.sleep(10)
         self.browser.find_element(By.ID, "submit").send_keys(Keys.ENTER)
-        
 
         self.browser.find_element(By.ID, "register").send_keys(Keys.ENTER)
         self.browser.find_element(By.ID, "email").send_keys(email)
         self.browser.find_element(By.ID, "password").send_keys(password)
         
         self.browser.find_element(By.ID, "submit").send_keys(Keys.ENTER)
-        
         
         self.assertEqual(self.browser.title, "Register")
 
