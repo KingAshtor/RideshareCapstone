@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="passAcc" type="id" />
+    <item name="passConfAcc" type="id" />
+    <item name="passAccInput" type="id" />
+    <item name="passConfAccInput" type="id" />
+    <item name="submitBtn" type="id" />
+    <item name="linesr" type="id" />
+    <item name="giveRB" type="id" />
+    <item name="needRB" type="id" />
+    <item name="noPrefRB" type="id" />
+    <item name="eatRB" type="id" />
+    <item name="noEatRB" type="id" />
+    <item name="noSmokRB" type="id" />
+    <item name="dontSmokRB" type="id" />
+    <item name="smokRB" type="id" />
+    <item name="smokPrefTxt" type="id" />
+    <item name="willYouTxt" type="id" />
+    <item name="cityTxt" type="id" />
+    <item name="stateInput" type="id" />
+    <item name="cityInput" type="id" />
+    <item name="stateTxt" type="id" />
+    <item name="AddressAccInput" type="id" />
+    <item name="AddressAcc" type="id" />
+    <item name="PTCEmailInput" type="id" />
+    <item name="lNameInput" type="id" />
+    <item name="lNameTxt" type="id" />
+    <item name="fNameTxt" type="id" />
+    <item name="fNameInput" type="id" />
+    <item name="eatPrefTxt" type="id" />
+    <item name="accountTxt" type="id" />
+    <item name="linesl" type="id" />
+</resources>

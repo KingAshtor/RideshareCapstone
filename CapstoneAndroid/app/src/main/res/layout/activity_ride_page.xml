@@ -9,49 +9,17 @@
     <EditText
         android:id="@+id/destinationInput"
         android:layout_width="341dp"
-        android:layout_height="51dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="11dp"
         android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
         android:ems="10"
-        android:hint="@string/destinationHint"
         android:inputType="textPostalAddress"
         app:layout_constraintBottom_toTopOf="@+id/subBTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DestinationTxt" />
-
-    <TextView
-        android:id="@+id/DestinationTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="310dp"
-        android:layout_marginRight="310dp"
-        android:contentDescription="@string/DestinationTxt"
-        android:text="@string/DestinationTxt"
-        android:textColor="#004E71"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
-
-    <EditText
-        android:id="@+id/pickupInput"
-        android:layout_width="341dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="10dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/pickupHint"
-        android:inputType="textPostalAddress|textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/DestinationTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickupTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/DestinationTxt"
+        app:layout_constraintVertical_bias="0.055" />
 
     <TextView
         android:id="@+id/pickupTxt"
@@ -70,54 +38,22 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
-
-    <EditText
-        android:id="@+id/timeInput"
-        android:layout_width="341dp"
-        android:layout_height="51dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/timeHint"
-        android:inputType="time"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.485" />
-
-    <TextView
-        android:id="@+id/timeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="310dp"
-        android:layout_marginRight="310dp"
-        android:contentDescription="@string/timeTxt"
-        android:text="@string/timeTxt"
-        android:textColor="#004E71"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.551" />
 
     <EditText
         android:id="@+id/dateInput"
         android:layout_width="341dp"
-        android:layout_height="51dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="5dp"
         android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
         android:ems="10"
-        android:hint="@string/dateHint"
         android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/timeTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/dateTxt"
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/dateTxt"
@@ -136,7 +72,74 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327" />
+        app:layout_constraintVertical_bias="0.346" />
+
+    <EditText
+        android:id="@+id/pickupInput"
+        android:layout_width="341dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
+        android:ems="10"
+        android:inputType="textPostalAddress|textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/DestinationTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pickupTxt"
+        app:layout_constraintVertical_bias="0.666" />
+
+    <EditText
+        android:id="@+id/timeInput"
+        android:layout_width="341dp"
+        android:layout_height="40dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.493" />
+
+    <TextView
+        android:id="@+id/DestinationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginEnd="310dp"
+        android:layout_marginRight="310dp"
+        android:contentDescription="@string/DestinationTxt"
+        android:text="@string/DestinationTxt"
+        android:textColor="#004E71"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651" />
+
+    <TextView
+        android:id="@+id/timeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginEnd="310dp"
+        android:layout_marginRight="310dp"
+        android:contentDescription="@string/timeTxt"
+        android:text="@string/timeTxt"
+        android:textColor="#004E71"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
 
     <Button
         android:id="@+id/subBTN"
