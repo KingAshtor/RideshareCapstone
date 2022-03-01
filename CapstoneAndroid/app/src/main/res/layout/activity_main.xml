@@ -8,17 +8,16 @@
 
     <TextView
         android:id="@+id/rideShareTxt"
-        android:layout_width="326dp"
-        android:layout_height="169dp"
+        android:layout_width="379dp"
+        android:layout_height="301dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="192dp"
         android:gravity="center"
         android:text="@string/rideshare_is_a_resource_for_ptc_students_to_find_or_provide_rides_for_their_friends_and_classmates_to_and_from_the_school"
         android:textColor="#004E71"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,14 +72,12 @@
         android:id="@+id/ptcLogoTxt"
         android:layout_width="312dp"
         android:layout_height="125dp"
-        android:layout_marginTop="100dp"
         android:layout_marginBottom="506dp"
         android:contentDescription="@string/ptcLogoTxt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ptclogo" />
 
     <ImageView
