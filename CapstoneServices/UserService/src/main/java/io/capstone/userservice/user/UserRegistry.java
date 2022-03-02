@@ -25,16 +25,16 @@ public class UserRegistry {
     public User userByEmail(String email) throws SQLException {
         return database.function(database.connection(), stmt -> {
             final ResultSet res = stmt.executeQuery(format("SELECT * FROM Rideshare.Usr WHERE email = '%s'", email));
-            res.next();
-            return user(res);
+            if (res.next()) return user(res);
+            else return null;
         });
     }
 
     public User userById(int usrID) throws SQLException {
         return database.function(database.connection(), stmt -> {
             final ResultSet res = stmt.executeQuery(format("SELECT * FROM Rideshare.Usr WHERE usrID = %d", usrID));
-            res.next();
-            return user(res);
+            if (res.next()) return user(res);
+            else return null;
         });
     }
 
@@ -52,8 +52,11 @@ public class UserRegistry {
                     && !hasUserByEmail(user.getEmail())) {
                 stmt.execute(format("INSERT INTO Rideshare.Usr VALUES ('%s', '%s', '%s', '%s', '%s', 0, 0)", email, fName, lName, hashedPwd, salt));
             } else {
-                if (user.getUsrID() == null)
-                    user.setUsrID(userByEmail(user.getEmail()).getUsrID());
+                if (user.getUsrID() == null) {
+                    final User byEmail = userByEmail(user.getEmail());
+                    if (byEmail == null) return;
+                    user.setUsrID(byEmail.getUsrID());
+                }
                 final List<Pair> entries = Arrays.asList(Pair.of("email", email), Pair.of("fName", fName), Pair.of("lName", lName), Pair.of("hashedPwd", hashedPwd), Pair.of("salt", salt));
                 final String setEntries = entries.stream()
                         .filter(pair -> !"".equals(pair.value))
@@ -73,10 +76,10 @@ public class UserRegistry {
     }
 
     public void deleteUserByEmail(String email) throws SQLException {
-        final String where = format("email = '%s'", email);
+        int id = id(email);
         database
-                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Role WHERE %s", where)))
-                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Usr WHERE %s", where)));
+                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Role WHERE UsrID = %d", id)))
+                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Usr WHERE usrID = %d", id)));
     }
 
     public List<User> getUsers() throws SQLException {
@@ -165,22 +168,27 @@ public class UserRegistry {
     private User user(ResultSet res) throws SQLException {
         final Integer usrID = value(res, () -> res.getInt("usrID"));
         final String
-                email = value(res, () -> res.getString("email")),
-                fName = value(res, () -> res.getString("fName")),
-                lName = value(res, () -> res.getString("lName")),
-                hashedPwd = value(res, () -> res.getString("hashedPwd")),
-                salt = value(res, () -> res.getString("salt"));
+                email = emptyToNull(value(res, () -> res.getString("email"))),
+                fName = emptyToNull(value(res, () -> res.getString("fName"))),
+                lName = emptyToNull(value(res, () -> res.getString("lName"))),
+                hashedPwd = emptyToNull(value(res, () -> res.getString("hashedPwd"))),
+                salt = emptyToNull(value(res, () -> res.getString("salt")));
         return new User(usrID, email, fName, lName, hashedPwd, salt, null) {{
             setRoles(roles(this.getUsrID()));
         }};
     }
 
     private <T> T value(ResultSet res, Database.DataReturning<T> function) throws SQLException {
-        return res.wasNull() ? null : function.process();
+        final T result = function.process();
+        return res.wasNull() ? null : result;
     }
 
     private String nullToEmpty(String value) {
         return value == null ? "" : value;
+    }
+
+    private String emptyToNull(String value) {
+        return Objects.equals(value, "") ? null : value;
     }
 
     @Getter

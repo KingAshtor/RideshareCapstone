@@ -53,7 +53,6 @@ public class Queries {
 
         final Response listResponse = get("http://127.0.0.1:8080/api/user/list");
         @SuppressWarnings("unchecked") final List<User> users = mapper.readValue(listResponse.text, List.class);
-        System.out.println(users);
     }
 
     public void register(String email, String password) {
