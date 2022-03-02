@@ -20,8 +20,6 @@ public class Database {
                 db(), name(), password());
     }
 
-    private Connection connection;
-
     public Connection connection() throws SQLException {
         return DriverManager.getConnection(CONNECTION_STRING);
     }
