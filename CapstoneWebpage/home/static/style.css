@@ -1,9 +1,26 @@
+:root {
+    --min-width: 1px;
+    --max-width: 20px;
+}
+
 .limit-header-size-lg {
     width: 20vw;
 }
 
 .limit-header-size-sm {
     width: 10vw;
+}
+
+.text-lg {
+    font-size: calc(9px + 0.5vw);
+}
+
+.text-md {
+    font-size: calc(7.5px + 0.5vw);
+}
+
+.text-sm {
+    font-size: calc(6px + 0.5vw);
 }
 
 .text-ptc {
@@ -51,7 +68,6 @@ input[type="text"]:focus {
     outline: 0 !important;
     border: 0 !important;
     background-color: rgb(220, 216, 215) !important;
-    color: rgb(0, 89, 132) !important;
 }
 
 .btn-ptc, 

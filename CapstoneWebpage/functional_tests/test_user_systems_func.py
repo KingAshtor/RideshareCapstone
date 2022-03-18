@@ -18,20 +18,17 @@ class RegisterTest(FunctionalTest):
         self.browser.find_element(By.ID, "register").send_keys(Keys.ENTER)
         self.browser.find_element(By.ID, "email").send_keys(email)
         self.browser.find_element(By.ID, "password").send_keys(password)
-        time.sleep(10)
         self.browser.find_element(By.ID, "submit").send_keys(Keys.ENTER)
 
         self.browser.find_element(By.ID, "register").send_keys(Keys.ENTER)
         self.browser.find_element(By.ID, "email").send_keys(email)
         self.browser.find_element(By.ID, "password").send_keys(password)
-        
         self.browser.find_element(By.ID, "submit").send_keys(Keys.ENTER)
         
         self.assertEqual(self.browser.title, "Register")
 
 class LoginTest(FunctionalTest):
     def test_login_process(self):
-        wait = WebDriverWait(self.browser, 10)
         self.browser.get(self.live_server_url)
 
         email = f"{str(uuid.uuid4()).replace('-', '_')}@gmail.com"

@@ -64,6 +64,10 @@ public class Database {
         R process(T data) throws SQLException;
     }
 
+    public interface DataBiFunction<T1, T2, R> {
+        R process(T1 data1, T2 data2) throws SQLException;
+    }
+
     public interface DataReturning<R> {
         R process() throws SQLException;
     }

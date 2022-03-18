@@ -10,6 +10,7 @@
         <input type="hidden" id="type" name="type">
         <input type="hidden" id="search" name="search">
         <input type="hidden" id="email" name="email">
+        <input type="hidden" id="id" name="id">
     </div>
 </form>
 
@@ -45,12 +46,18 @@
                             {% endfor %}
                         </div>
                         <br>
-                        <button class="btn btn-sm btn-ptc" id="submitdelete" onclick="document.getElementById('type').value = 'delete'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Delete</button>
+                        {% if "admin" in roles %}
+                            <button class="btn btn-sm btn-ptc" id="submitdelete" onclick="document.getElementById('type').value = 'delete'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Delete</button>
                         
-                        {% if "admin" not in "roles"|value:user %}
-                            <button class="btn btn-sm btn-ptc" id="submitpromote" onclick="document.getElementById('type').value = 'promote'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Promote</button>
-                        {% elif "admin" in "roles"|value:user %}
-                            <button class="btn btn-sm btn-ptc" id="submitdemote" onclick="document.getElementById('type').value = 'demote'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Demote</button>
+                            {% if "admin" not in "roles"|value:user %}
+                                <button class="btn btn-sm btn-ptc" id="submitpromote" onclick="document.getElementById('type').value = 'promote'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Promote</button>
+                            {% elif "admin" in "roles"|value:user %}
+                                <button class="btn btn-sm btn-ptc" id="submitdemote" onclick="document.getElementById('type').value = 'demote'; document.getElementById('email').value = `{{ 'email'|value:user }}`; document.getElementById('form').submit();">Demote</button>
+                            {% endif %}
+                        {% endif %}
+                        
+                        {% if "driver" in "roles"|value:user and "rider" in roles %}
+                            <button class="btn btn-sm btn-ptc" id="submitrequest" onclick="document.getElementById('type').value = 'request'; document.getElementById('id').value = `{{ 'usrID'|value:user }}`; document.getElementById('form').submit();">Request a ride</button>
                         {% endif %}
                     </div>
                 </div>

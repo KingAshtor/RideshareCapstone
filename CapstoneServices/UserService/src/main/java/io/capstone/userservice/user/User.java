@@ -1,13 +1,17 @@
 package io.capstone.userservice.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.capstone.userservice.Database;
+import io.capstone.userservice.ride.Address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 @NoArgsConstructor
 @Getter
@@ -20,16 +24,18 @@ public class User {
     @JsonProperty("lName")
     private String lName;
     private String hashedPwd, salt;
+    private Address address;
     @Setter
     private Set<String> roles = new HashSet<>();
 
-    public User(Integer usrID, String email, String fName, String lName, String hashedPwd, String salt, Set<String> roles) {
+    public User(Integer usrID, String email, String fName, String lName, String hashedPwd, String salt, Set<String> roles, int address, Database.DataFunction<Integer, Address> getAddress) throws SQLException {
         this.usrID = usrID;
         setEmail(email);
         setFName(fName);
         setLName(lName);
         setHashedPwd(hashedPwd);
         setSalt(salt);
+        setAddress(address, getAddress);
         if (roles != null)
             this.roles = roles;
     }
@@ -69,6 +75,10 @@ public class User {
     public void setSalt(String salt) {
         if (salt != null && salt.length() != 36) this.salt = null;
         else this.salt = salt;
+    }
+
+    public void setAddress(int address, Database.DataFunction<Integer, Address> getAddress) throws SQLException {
+        this.address = getAddress.process(address);
     }
 
     @Override
