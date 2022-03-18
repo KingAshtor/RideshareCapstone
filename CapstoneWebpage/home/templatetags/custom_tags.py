@@ -1,10 +1,21 @@
+from datetime import datetime
+import re
 from django import template
+import pytz
 
 register = template.Library()
 
 @register.filter("value")
 def value(key, dict):
     return dict[key]
+    
+@register.filter("time")
+def time(dateTime):
+    return re.sub(":\w{2}.\w{3}\+\w{2}:\w{2}$", "", dateTime)
+
+@register.filter("len")
+def len(arr):
+    return len(arr)
 
 @register.filter("tag")
 def tag(value):
@@ -27,3 +38,8 @@ def tag(value):
     elif (value == "admin"):
         return "Admin"
     return ""
+
+@register.filter("timezone")
+def timezone(time, zone):
+    time = datetime.strptime(time, '%Y-%m-%dT%H:%M:%S.%f%z').astimezone(pytz.timezone(zone))
+    return time.strftime("%Y-%m-%dT%H:%M")

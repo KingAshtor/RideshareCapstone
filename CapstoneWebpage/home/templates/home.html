@@ -5,54 +5,300 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 {% if logged_in %}
-
-{% if "admin" in roles %}
-    <div>
-        <a href="users" class="form-control btn btn-ptc rounded-0"><b>Admin Panel</b></a>
-    </div>
-{% endif %}
+<form id="form" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="type" id="type">
+    <input type="hidden" name="id" id="id">
+    <input type="hidden" name="value" id="value">
+</form>
 
 <br>
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-10">
             <div class="container">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <img src="{% static 'pfp.png' %}" class="img-fluid rounded-circle"/>
                         {% for role in roles %}
-                            <small class="text-nowrap rounded px-1 bg-ptc text-ptc text-sm">{{role|tag}}</small>
+                            <small class="text-nowrap rounded px-1 bg-ptc text-ptc text-md">{{role|tag}}</small>
                         {% endfor %}
                         <a href="edit" class="form-control btn btn-sm btn-ptc">Edit</a>
                         <a href="logout" class="form-control btn btn-sm btn-ptc">Logout</a>
                     </div>
                     
-                    <div class="col-6">
+                    <div class="col-8">
                         <br>
                         <p class="text-muted m-0">Email</p>
-                        <h6 class="text-ptc m-0">{{email}}</h6>
+                        <p class="text-ptc m-0">{{email}}</p>
                         <br>
                         <p class="text-muted m-0">First Name</p>
-                        <h6 class="text-ptc m-0">{{fName}}</h6>
+                        <p class="text-ptc m-0">{{fName}}</p>
                         <br>
                         <p class="text-muted m-0">Last Name</p>
-                        <h6 class="text-ptc">{{lName}}</h6>
+                        <p class="text-ptc">{{lName}}</p>
                     </div>
                 </div>
             </div>
             <br>
             <br>
-                <a href="request" class="form-control btn btn-lg btn-ptc"><b>NEED A RIDE?</b></a>
+            <div class="container-fluid m-0">
+                <div class="row">
+                    <div class="col">
+                        {% if "driver" in roles %}
+                        <h4 class="text-ptc text-center">Routes</h4>
+                        <hr>
+                        <div id="routes" class="container-fluid px-0 text-center text-ptc" style="overflow-y: scroll; overflow-x: hidden;">
+                            {% if "driver" in roles %}
+                            {% for route in routes %}
+                                <div class="card m-0">
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>From</b></p>
+                                                    {% with start="startAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:start }}, {{ "state"|value:start }} {{ "zip"|value:start }}</p>
+                                                    {% endwith %}
+                                                </div>
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>To</b></p>
+                                                    {% with end="endAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:end }}, {{ "state"|value:end }} {{ "zip"|value:end }}</p>
+                                                    {% endwith %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        {% with routeID="routeID"|value:route %}
+                                        <input type="checkbox" 
+                                        onclick="
+                                        document.getElementById('type').value = 'recurring';
+                                        document.getElementById('id').value = '{{ routeID }}';
+                                        document.getElementById('value').value = this.checked;
+                                        document.getElementById('form').submit();
+                                        " id="recurring"
+                                        {% if 'repeated'|value:route %}
+                                            checked
+                                        {% endif %}
+                                        >
+                                        <label>Recurring</label>
+                                        {% endwith %}
+                                    </div>
+                                </div>
+                                <br>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        {% if "driver" in roles %}
+                        <h4 class="text-ptc text-center">Requests</h4>
+                        <hr>
+                        <div id="requests" class="container-fluid px-0 text-center text-ptc" style="overflow-y: scroll; overflow-x: hidden;">
+                            {% for ride in incoming %}
+                            {% with route="route"|value:ride %}
+                            {% with driver="driver"|value:route rider="rider"|value:ride %}
+                                <div class="card m-0">
+                                    <div class="card-header">
+                                        {% with dt="dateTime"|value:ride %}
+                                        {% if "email"|value:rider == email %}
+                                            <p class="my-0 text-lg"><b>Driver</b>: {{ "fName"|value:driver }} {{ "lName"|value:driver }}</p>
+                                            <p class="my-0 text-lg"><b>Rider</b>: You</p>
+                                        {% elif "email"|value:driver == email %}
+                                            <p class="my-0 text-lg"><b>Driver</b>: You</p>
+                                            <p class="my-0 text-lg"><b>Rider</b>: {{ "fName"|value:rider }} {{ "lName"|value:rider }}</p>
+                                        {% endif %}
+                                        <input class="form-control form-control-sm" type="datetime-local" value="{{ dt|timezone:zone }}" readonly>
+                                        {% endwith %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>From</b></p>
+                                                    {% with route="route"|value:ride %}
+                                                    {% with start="startAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:start }}, {{ "state"|value:start }} {{ "zip"|value:start }}</p>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                </div>
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>To</b></p>
+                                                    {% with route="route"|value:ride %}
+                                                    {% with end="endAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:end }}, {{ "state"|value:end }} {{ "zip"|value:end }}</p>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="container">
+                                            <div class="row">
+                                                {% with ride="rideID"|value:ride %}
+                                                {% if "email"|value:driver == email %}
+                                                <div class="col">
+                                                    <button class="btn btn-ptc form-control"
+                                                    onclick="
+                                                    document.getElementById('type').value = 'accept';
+                                                    document.getElementById('id').value = '{{ ride }}';
+                                                    document.getElementById('form').submit();
+                                                    "
+                                                    >Accept</button>
+                                                </div>
+                                                <div class="col">
+                                                    <button class="btn btn-ptc form-control" 
+                                                    onclick="
+                                                    document.getElementById('type').value = 'decline';
+                                                    document.getElementById('id').value = '{{ ride }}';
+                                                    document.getElementById('form').submit();
+                                                    ">Decline</button>
+                                                </div>
+                                                {% elif "email"|value:rider == email %}
+                                                <div class="col">
+                                                    <button class="btn btn-ptc form-control" 
+                                                    onclick="
+                                                    document.getElementById('type').value = 'cancelreq';
+                                                    document.getElementById('id').value = '{{ ride }}';
+                                                    document.getElementById('form').submit();
+                                                    ">Cancel</button>
+                                                </div>
+                                                {% endif %}
+                                                {% endwith %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            {% endwith %}
+                            {% endwith %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        {% if "rider" in roles %}
+                        <h4 class="text-ptc text-center">Scheduled</h4>
+                        <hr>
+                        <div id="scheduled" class="container-fluid px-0 text-center text-ptc" style="overflow-y: scroll; overflow-x: hidden;">
+                            {% for ride in outgoing %}
+                                <div class="card m-0">
+                                    <div class="card-header">
+                                        {% with route="route"|value:ride %}
+                                        {% with dt="dateTime"|value:ride %}
+                                        {% with driver="driver"|value:route rider="rider"|value:ride %}
+                                        {% if "email"|value:rider == email %}
+                                            <p class="my-0 text-lg"><b>Driver</b>: {{ "fName"|value:driver }} {{ "lName"|value:driver }}</p>
+                                            <p class="my-0 text-lg"><b>Rider</b>: You</p>
+                                        {% elif "email"|value:driver == email %}
+                                            <p class="my-0 text-lg"><b>Driver</b>: You</p>
+                                            <p class="my-0 text-lg"><b>Rider</b>: {{ "fName"|value:rider }} {{ "lName"|value:rider }}</p>
+                                        {% endif %}
+                                        <input class="form-control form-control-sm" type="datetime-local" value="{{ dt|timezone:zone }}" readonly>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% endwith %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>From</b></p>
+                                                    {% with route="route"|value:ride %}
+                                                    {% with start="startAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:start }}, {{ "state"|value:start }} {{ "zip"|value:start }}</p>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                </div>
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>To</b></p>
+                                                    {% with route="route"|value:ride %}
+                                                    {% with end="endAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:end }}, {{ "state"|value:end }} {{ "zip"|value:end }}</p>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        {% with ride="rideID"|value:ride %}
+                                        <button class="btn btn-ptc form-control" 
+                                        onclick="
+                                        document.getElementById('type').value = 'cancel';
+                                        document.getElementById('id').value = '{{ ride }}';
+                                        document.getElementById('form').submit();
+                                        ">Cancel</button>
+                                        {% endwith %}
+                                    </div>
+                                </div>
+                                <br>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <br>
+            <a href="users" class="form-control btn btn-lg btn-ptc"><b>NEED A RIDE?</b></a>
             <br>
             <br>
         </div>
     </div>
 </div>
-<br>
+<br> <br>
 <img src="{% static 'right.svg' %}" class="img-fluid"/>
 <br>
-<br>
 
+<script>
+    const TIMER = setInterval(() => {
+        const scheduled = document.getElementById("scheduled")
+        const requests = document.getElementById("requests")
+        const routes = document.getElementById("routes")
+
+        var newHeight = null
+
+        if (scheduled != null) {
+            newHeight = scheduled.children.length > 0 ? `${scheduled.children[0].clientHeight}px` : "0px"
+            if (scheduled.style.height != newHeight) 
+                scheduled.style.height = newHeight
+        }
+        
+        if (requests != null) {
+            newHeight = requests.children.length > 0 ? `${requests.children[0].clientHeight}px` : "0px"
+            if (requests.style.height != newHeight) 
+                requests.style.height = newHeight
+        }
+
+        if (routes != null) {
+            newHeight = routes.children.length > 0 ? `${routes.children[0].clientHeight}px` : "0px"
+            if (routes.style.height != newHeight) 
+                routes.style.height = newHeight
+        }
+    }, 250)
+</script>
 {% else %}
 
 <br>
