@@ -33,7 +33,7 @@
         android:contentDescription="@string/PTCLogo"
         android:text="@string/PTCLogo"
         android:textColor="#004E71"
-        android:textSize="60"
+        android:textSize="60dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

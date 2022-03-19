@@ -40,7 +40,7 @@
     <string name="nameTxt">Name</string>
     <string name="emailTxt">Email</string>
     <string name="addressTxt">Address</string>
-    <string name="Smokingtxt">Smoking Preferences</string>
+    <string name="Smokingtxt">Smoking Preferences:</string>
     <string name="historyTxt">History</string>
     <string name="name">name</string>
     <string name="email">email</string>

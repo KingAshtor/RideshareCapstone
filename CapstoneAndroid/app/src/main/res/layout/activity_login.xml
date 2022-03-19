@@ -6,47 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
-    <EditText
-        android:id="@+id/passwordInput"
-        android:layout_width="341dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="472dp"
-        android:layout_marginBottom="208dp"
-        android:autofillHints=""
-        android:contentDescription="@string/passwordInput"
-        android:ems="10"
-        android:hint="@string/passwordHint"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/PasswordTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="453dp"
-        android:layout_marginEnd="313dp"
-        android:layout_marginRight="313dp"
-        android:layout_marginBottom="259dp"
-        android:contentDescription="@string/PasswordTxt"
-        android:text="@string/PasswordTxt"
-        android:textColor="#004E71"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="225dp"
         android:layout_height="51dp"
-        android:layout_marginTop="552dp"
-        android:layout_marginBottom="128dp"
         android:contentDescription="@string/signUpBtn"
         android:text="@string/loginBtn"
         android:textColor="#004E71"
@@ -56,26 +19,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.725" />
 
     <ImageView
         android:id="@+id/linesBottom"
         android:layout_width="341dp"
-        android:layout_height="185dp"
-        android:layout_marginTop="570dp"
+        android:layout_height="70dp"
         android:contentDescription="@string/linesBottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.975"
         app:srcCompat="@drawable/linesbottom" />
 
     <ImageView
         android:id="@+id/linesTop"
-        android:layout_width="340dp"
-        android:layout_height="199dp"
+        android:layout_width="341dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="569dp"
         android:contentDescription="@string/linesTop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,43 +46,37 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/lines" />
 
     <ImageView
         android:id="@+id/ptcLogoTxt"
-        android:layout_width="312dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="506dp"
+        android:layout_width="319dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/ptcLogoTxt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.133"
         app:srcCompat="@drawable/ptclogo" />
 
     <ImageView
         android:id="@+id/rideShareLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="163dp"
-        android:layout_marginBottom="424dp"
+        android:layout_width="405dp"
+        android:layout_height="84dp"
         android:contentDescription="@string/rideShareLogo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.231"
         app:srcCompat="@drawable/ridesharelogo" />
 
     <TextView
         android:id="@+id/loginTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="307dp"
-        android:layout_marginBottom="384dp"
         android:contentDescription="@string/loginTxt"
         android:text="@string/loginTxt"
         android:textColor="#004E71"
@@ -128,39 +85,66 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.422" />
 
     <EditText
         android:id="@+id/emailInput"
         android:layout_width="341dp"
         android:layout_height="51dp"
-        android:layout_marginTop="377dp"
-        android:layout_marginBottom="303dp"
         android:autofillHints=""
-        android:contentDescription="@string/emailInput"
         android:ems="10"
         android:hint="@string/emailHint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.517" />
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="341dp"
+        android:layout_height="51dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/passwordHint"
+        android:inputType="textPassword"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632" />
+
+    <TextView
+        android:id="@+id/PasswordTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/PasswordTxt"
+        android:text="@string/PasswordTxt"
+        android:textColor="#004E71"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.577" />
 
     <TextView
         android:id="@+id/PTCEmailTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="310dp"
-        android:layout_marginRight="310dp"
         android:contentDescription="@string/PTCEmailTxt"
         android:text="@string/PTCEmailTxt"
         android:textColor="#004E71"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.466" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

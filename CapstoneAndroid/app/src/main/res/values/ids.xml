@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="passAcc" type="id" />
+    <item name="confirmPassAcc" type="id" />
     <item name="passConfAcc" type="id" />
     <item name="passAccInput" type="id" />
     <item name="passConfAccInput" type="id" />
