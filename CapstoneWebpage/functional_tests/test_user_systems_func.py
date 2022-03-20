@@ -65,13 +65,11 @@ class LogoutTest(FunctionalTest):
         
         self.browser.find_element(By.ID, "submit").send_keys(Keys.ENTER)
         
-
         self.browser.find_element(By.ID, "login").send_keys(Keys.ENTER)
         self.browser.find_element(By.ID, "email").send_keys(email)
         self.browser.find_element(By.ID, "password").send_keys(password)
         
         self.browser.find_element(By.ID, "submit").send_keys(Keys.ENTER)
-        
 
         self.assertEqual(self.browser.title, "Home")
         throws = False

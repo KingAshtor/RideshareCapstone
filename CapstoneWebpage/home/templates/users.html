@@ -60,6 +60,64 @@
                             <button class="btn btn-sm btn-ptc" id="submitrequest" onclick="document.getElementById('type').value = 'request'; document.getElementById('id').value = `{{ 'usrID'|value:user }}`; document.getElementById('form').submit();">Request a ride</button>
                         {% endif %}
                     </div>
+                    <div class="card-footer">
+                        {% if rides|len > 0 %}
+                        <div id="rides" class="container-fluid px-0 text-center text-ptc" style="overflow-y: scroll; overflow-x: hidden; height: 180px">
+                            {% for ride in rides %}
+                                <div class="card m-0">
+                                    <div class="card-header">
+                                        {% with route="route"|value:ride %}
+                                        {% with dt="dateTime"|value:ride %}
+                                        {% with driver="driver"|value:route rider="rider"|value:ride %}
+                                        <p class="my-0 text-lg"><b>Driver</b>: {{ "fName"|value:driver }} {{ "lName"|value:driver }}</p>
+                                        <p class="my-0 text-lg"><b>Rider</b>: {{ "fName"|value:rider }} {{ "lName"|value:rider }}</p>
+                                        <input class="form-control form-control-sm" type="datetime-local" value="{{ dt|timezone:zone }}" readonly>
+                                        {% endwith %}
+                                        {% endwith %}
+                                        {% endwith %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>From</b></p>
+                                                    {% with route="route"|value:ride %}
+                                                    {% with start="startAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:start }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:start }}, {{ "state"|value:start }} {{ "zip"|value:start }}</p>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                </div>
+                                                <div class="col">
+                                                    <p class="my-0 text-lg"><b>To</b></p>
+                                                    {% with route="route"|value:ride %}
+                                                    {% with end="endAddress"|value:route %}
+                                                        <p class="my-0 text-lg">{{ "line1"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "line2"|value:end }}</p>
+                                                        <p class="my-0 text-lg">{{ "city"|value:end }}, {{ "state"|value:end }} {{ "zip"|value:end }}</p>
+                                                    {% endwith %}
+                                                    {% endwith %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        {% with ride="rideID"|value:ride %}
+                                        <button class="btn btn-ptc form-control" 
+                                        onclick="
+                                        document.getElementById('type').value = 'cancel';
+                                        document.getElementById('id').value = '{{ ride }}';
+                                        document.getElementById('form').submit();
+                                        ">Cancel</button>
+                                        {% endwith %}
+                                    </div>
+                                </div>
+                                <br>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
