@@ -59,6 +59,7 @@
     <string name="PTCemailHint">Email</string>
     <string name="cityTxt">City</string>
     <string name="stateTxt">State</string>
+    <string name="zipTxt">Zip</string>
     <string name="cityHint">City</string>
     <string name="stateHint">State</string>
     <string name="passAcc">Password</string>

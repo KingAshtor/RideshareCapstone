@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"><![CDATA[
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="-25dp"><![CDATA[
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,7 +14,180 @@
 
 
 
+
+
+
+
+
+
+
+
     ]]>
+
+    <TextView
+        android:id="@+id/addressAcc2"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/AddressAcc"
+        android:text="@string/AddressAcc"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.403" />
+
+    <EditText
+        android:id="@+id/Line1AccInput"
+        android:layout_width="228dp"
+        android:layout_height="30dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.366" />
+
+    <TextView
+        android:id="@+id/stateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/stateTxt"
+        android:text="@string/stateTxt"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.405"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <EditText
+        android:id="@+id/stateInput"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
+        android:ems="10"
+        android:inputType="textShortMessage"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
+
+    <TextView
+        android:id="@+id/cityTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/cityTxt"
+        android:text="@string/cityTxt"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <EditText
+        android:id="@+id/cityInput"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <TextView
+        android:id="@+id/zipTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/zipTxt"
+        android:text="@string/zipTxt"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.711"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <EditText
+        android:id="@+id/zipInput"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
+        android:ems="10"
+        android:inputType="textShortMessage"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <EditText
+        android:id="@+id/Line2AccInput"
+        android:layout_width="228dp"
+        android:layout_height="30dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_corner_view"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.436" />
+
+    <TextView
+        android:id="@+id/addressAcc"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/AddressAcc"
+        android:text="@string/AddressAcc"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.333" />
 
     <TextView
         android:id="@+id/accountTxt"
@@ -29,7 +204,7 @@
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintVertical_bias="0.083" />
 
     <TextView
         android:id="@+id/fNameTxt"
@@ -42,63 +217,58 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintHorizontal_bias="0.261"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154" />
-
-    <CheckBox
-        android:id="@+id/eatRB"
-        android:layout_width="165dp"
-        android:layout_height="22dp"
-        android:checked="true"
-        android:contentDescription="@string/eatRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/eatRB"
-        android:textColor="#004E71"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643" />
+        app:layout_constraintVertical_bias="0.119" />
 
     <TextView
-        android:id="@+id/eatPrefTxt"
+        android:id="@+id/AddressAcc"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:contentDescription="@string/eatPrefTxt"
-        android:text="@string/eatPrefTxt"
+        android:contentDescription="@string/AddressAcc"
+        android:text="@string/AddressAcc"
         android:textColor="#004E71"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.194"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.61" />
+        app:layout_constraintVertical_bias="0.333" />
 
-    <CheckBox
-        android:id="@+id/noSmokRB"
-        android:layout_width="180dp"
-        android:layout_height="22dp"
-        android:contentDescription="@string/noSmokRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/noSmokRB"
+    <TextView
+        android:id="@+id/lNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/lNameTxt"
+        android:text="@string/lNameTxt"
         android:textColor="#004E71"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.874"
+        app:layout_constraintHorizontal_bias="0.26"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        app:layout_constraintVertical_bias="0.189" />
+
+    <TextView
+        android:id="@+id/passAcc2"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/passAcc"
+        android:text="@string/passAcc"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.254"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.773" />
 
     <TextView
         android:id="@+id/willYouTxt"
@@ -114,7 +284,184 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintVertical_bias="0.558" />
+
+    <CheckBox
+        android:id="@+id/smokeRB"
+        android:layout_width="180dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/smokRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/smokRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.681" />
+
+    <CheckBox
+        android:id="@+id/needRB"
+        android:layout_width="125dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/needRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/needRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.619" />
+
+    <CheckBox
+        android:id="@+id/dontSmokeRB"
+        android:layout_width="180dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/dontSmokRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/dontSmokRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.712" />
+
+    <CheckBox
+        android:id="@+id/eatRB"
+        android:layout_width="165dp"
+        android:layout_height="22dp"
+        android:checked="true"
+        android:contentDescription="@string/eatRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/eatRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.681" />
+
+    <CheckBox
+        android:id="@+id/noPrefRB"
+        android:layout_width="165dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/noPrefRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/noPrefRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.743" />
+
+    <CheckBox
+        android:id="@+id/giveRB"
+        android:layout_width="125dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/giveRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/giveRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.588" />
+
+    <CheckBox
+        android:id="@+id/noEatRB"
+        android:layout_width="165dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/noEatRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/noEatRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.712" />
+
+    <TextView
+        android:id="@+id/smokPrefTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/smokPrefTxt"
+        android:text="@string/Smokingtxt"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651" />
+
+    <TextView
+        android:id="@+id/eatPrefTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:contentDescription="@string/eatPrefTxt"
+        android:text="@string/eatPrefTxt"
+        android:textColor="#004E71"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.648" />
+
+    <CheckBox
+        android:id="@+id/noSmokeRB"
+        android:layout_width="180dp"
+        android:layout_height="22dp"
+        android:contentDescription="@string/noSmokRB"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:text="@string/noSmokRB"
+        android:textColor="#004E71"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.743" />
 
     <TextView
         android:id="@+id/confirmPassAcc"
@@ -130,89 +477,7 @@
         app:layout_constraintHorizontal_bias="0.295"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.815" />
-
-    <TextView
-        android:id="@+id/cityTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:contentDescription="@string/cityTxt"
-        android:text="@string/cityTxt"
-        android:textColor="#004E71"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.231"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.438" />
-
-    <EditText
-        android:id="@+id/cityInput"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_corner_view"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.475" />
-
-    <EditText
-        android:id="@+id/AddressAccInput"
-        android:layout_width="228dp"
-        android:layout_height="30dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_corner_view"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.403" />
-
-    <TextView
-        android:id="@+id/AddressAcc"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:contentDescription="@string/AddressAcc"
-        android:text="@string/AddressAcc"
-        android:textColor="#004E71"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.247"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.369" />
-
-    <TextView
-        android:id="@+id/smokPrefTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:contentDescription="@string/smokPrefTxt"
-        android:text="@string/Smokingtxt"
-        android:textColor="#004E71"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.819"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.613" />
+        app:layout_constraintVertical_bias="0.843" />
 
     <EditText
         android:id="@+id/passConfAccInput"
@@ -231,59 +496,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
-
-    <CheckBox
-        android:id="@+id/giveRB"
-        android:layout_width="125dp"
-        android:layout_height="22dp"
-        android:contentDescription="@string/giveRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/giveRB"
-        android:textColor="#004E71"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55" />
-
-    <TextView
-        android:id="@+id/lNameTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:contentDescription="@string/lNameTxt"
-        android:text="@string/lNameTxt"
-        android:textColor="#004E71"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.257"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.225" />
-
-    <CheckBox
-        android:id="@+id/noPrefRB"
-        android:layout_width="165dp"
-        android:layout_height="22dp"
-        android:contentDescription="@string/noPrefRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/noPrefRB"
-        android:textColor="#004E71"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        app:layout_constraintVertical_bias="0.884" />
 
     <EditText
         android:id="@+id/passAccInput"
@@ -302,42 +515,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.784" />
-
-    <EditText
-        android:id="@+id/stateInput"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_corner_view"
-        android:ems="10"
-        android:inputType="textShortMessage"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.475" />
-
-    <CheckBox
-        android:id="@+id/needRB"
-        android:layout_width="125dp"
-        android:layout_height="22dp"
-        android:contentDescription="@string/needRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/needRB"
-        android:textColor="#004E71"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
+        app:layout_constraintVertical_bias="0.813" />
 
     <TextView
         android:id="@+id/PTCEmailTxt"
@@ -350,62 +528,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.256"
+        app:layout_constraintHorizontal_bias="0.259"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.296" />
-
-    <CheckBox
-        android:id="@+id/noEatRB"
-        android:layout_width="165dp"
-        android:layout_height="22dp"
-        android:contentDescription="@string/noEatRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/noEatRB"
-        android:textColor="#004E71"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.674" />
-
-    <CheckBox
-        android:id="@+id/smokRB"
-        android:layout_width="180dp"
-        android:layout_height="22dp"
-        android:contentDescription="@string/smokRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/smokRB"
-        android:textColor="#004E71"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.874"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643" />
-
-    <TextView
-        android:id="@+id/passAcc2"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:contentDescription="@string/passAcc"
-        android:text="@string/passAcc"
-        android:textColor="#004E71"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.254"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.745" />
+        app:layout_constraintVertical_bias="0.261" />
 
     <EditText
         android:id="@+id/fNameInput"
@@ -420,10 +546,10 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.185" />
+        app:layout_constraintVertical_bias="0.149" />
 
     <EditText
         android:id="@+id/PTCEmailInput"
@@ -437,28 +563,10 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.33" />
-
-    <CheckBox
-        android:id="@+id/dontSmokRB"
-        android:layout_width="180dp"
-        android:layout_height="22dp"
-        android:contentDescription="@string/dontSmokRB"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:text="@string/dontSmokRB"
-        android:textColor="#004E71"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.874"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.674" />
+        app:layout_constraintVertical_bias="0.295" />
 
     <EditText
         android:id="@+id/lNameInput"
@@ -472,26 +580,10 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.258" />
-
-    <TextView
-        android:id="@+id/stateTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:contentDescription="@string/stateTxt"
-        android:text="@string/stateTxt"
-        android:textColor="#004E71"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.438" />
+        app:layout_constraintVertical_bias="0.222" />
 
     <Button
         android:id="@+id/submitBtn"

@@ -18,13 +18,27 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface Api {
     // Add api queries here
+    @GET("/api/roles/add/byEmail")
+    Call<JsonObject> addRole(@Query("email") String email, @Query("role") String role);
+
     @GET("/api/user/byEmail")
     Call<JsonObject> getUser(@Query("email") String email);
+
+    @GET("/api/ride/addr/add")
+    Call<JsonObject> addAddr(@Query("line1") String line1, @Query("line2") String line2,
+                             @Query("city") String city, @Query("state") String state, @Query("zip") String zip);
+
+    @GET("/api/ride/addr/del")
+    Call<JsonObject> delAddr(@Query("id") int id);
+
+    @GET("/api/user/put")
+    Call<JsonObject> putUser(@Body String body);
 
      // | Simplify Requests
      // v
@@ -36,6 +50,7 @@ public interface Api {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     Api API = RETROFIT.create(Api.class);
+    BiConsumer<Void, Response<JsonObject>> DO_NOTHING = (_1, _2) -> { };
     static <T> void enqueue(BiConsumer<T, Response<JsonObject>> consumer, AppCompatActivity context, Call<JsonObject> call, Class<T> type) {
         SERVICE.submit(() -> call.enqueue(new Callback<JsonObject>() {
             @Override
