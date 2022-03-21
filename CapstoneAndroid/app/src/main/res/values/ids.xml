@@ -11,16 +11,16 @@
     <item name="noPrefRB" type="id" />
     <item name="eatRB" type="id" />
     <item name="noEatRB" type="id" />
-    <item name="noSmokRB" type="id" />
-    <item name="dontSmokRB" type="id" />
-    <item name="smokRB" type="id" />
+    <item name="noSmokeRB" type="id" />
+    <item name="dontSmokeRB" type="id" />
+    <item name="smokeRB" type="id" />
     <item name="smokPrefTxt" type="id" />
     <item name="willYouTxt" type="id" />
     <item name="cityTxt" type="id" />
-    <item name="stateInput" type="id" />
+    <item name="zipInput" type="id" />
     <item name="cityInput" type="id" />
     <item name="stateTxt" type="id" />
-    <item name="AddressAccInput" type="id" />
+    <item name="Line1AccInput" type="id" />
     <item name="AddressAcc" type="id" />
     <item name="PTCEmailInput" type="id" />
     <item name="lNameInput" type="id" />
