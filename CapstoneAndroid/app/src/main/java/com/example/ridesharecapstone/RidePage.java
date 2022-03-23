@@ -19,10 +19,6 @@ import java.util.regex.Matcher;
 
 public class RidePage extends AppCompatActivity {
 
-    private String txt(TextView view) {
-        return view.getText().toString();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +29,8 @@ public class RidePage extends AppCompatActivity {
 
         final TextView date = findViewById(R.id.dateInput); //declares date field as a textView
         final TextView time = findViewById(R.id.timeInput); //declares time field as a textView
-        final TextView pickup = findViewById(R.id.pickupInput); //declares pickup field as a textView
-        final TextView destination = findViewById(R.id.destinationInput); //declares destination field as a textView
+//        final TextView pickup = findViewById(R.id.pickupInput); //declares pickup field as a textView
+//        final TextView destination = findViewById(R.id.destinationInput); //declares destination field as a textView
 
         //Submit button listener
         submit.setOnClickListener(view -> {
@@ -43,10 +39,15 @@ public class RidePage extends AppCompatActivity {
 
             //Test form data
             if (Arrays.asList(
-                    txt(date), txt(time), txt(pickup), txt(destination)
+                    txt(date), txt(time)//, txt(pickup), txt(destination)
             ).contains(""))
                 return; //First test to make sure no fields are blank, then tests to make sure destination and pickup are valid addresses
         });
 
+
+    }
+
+    private String txt(TextView view) {
+        return view.getText().toString();
     }
 }

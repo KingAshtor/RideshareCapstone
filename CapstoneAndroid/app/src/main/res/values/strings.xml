@@ -55,6 +55,8 @@
     <string name="lNameHint">Last Name</string>
     <string name="fNameHint">First Name</string>
     <string name="AddressAcc">Address</string>
+    <string name="AddressLine1">Address Line 1</string>
+    <string name="AddressLine2">Address Line 2</string>
     <string name="AddressAccHint">Address</string>
     <string name="PTCemailHint">Email</string>
     <string name="cityTxt">City</string>

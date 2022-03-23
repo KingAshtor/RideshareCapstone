@@ -22,6 +22,8 @@
 
 
 
+
+
     ]]>
 
     <TextView
@@ -29,16 +31,16 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:contentDescription="@string/AddressAcc"
-        android:text="@string/AddressAcc"
+        android:text="@string/AddressLine2"
         android:textColor="#004E71"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.403" />
+        app:layout_constraintVertical_bias="0.402" />
 
     <EditText
         android:id="@+id/Line1AccInput"
@@ -48,7 +50,7 @@
         android:background="@drawable/rounded_corner_view"
         android:ems="10"
         android:inputType="textPostalAddress"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +83,7 @@
         android:background="@drawable/rounded_corner_view"
         android:ems="10"
         android:inputType="textShortMessage"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,7 +116,7 @@
         android:background="@drawable/rounded_corner_view"
         android:ems="10"
         android:inputType="textPostalAddress"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +149,7 @@
         android:background="@drawable/rounded_corner_view"
         android:ems="10"
         android:inputType="textShortMessage"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +166,7 @@
         android:background="@drawable/rounded_corner_view"
         android:ems="10"
         android:inputType="textPostalAddress"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -172,22 +174,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.436" />
-
-    <TextView
-        android:id="@+id/addressAcc"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:contentDescription="@string/AddressAcc"
-        android:text="@string/AddressAcc"
-        android:textColor="#004E71"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.333" />
 
     <TextView
         android:id="@+id/accountTxt"
@@ -227,13 +213,13 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:contentDescription="@string/AddressAcc"
-        android:text="@string/AddressAcc"
+        android:text="@string/AddressLine1"
         android:textColor="#004E71"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.333" />
@@ -489,7 +475,7 @@
         android:inputType="textWebPassword"
         android:scaleX="1"
         android:scaleY="1"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -508,7 +494,7 @@
         android:ems="10"
         android:inputType="textWebPassword"
         android:scaleX="1"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -559,7 +545,7 @@
         android:background="@drawable/rounded_corner_view"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -576,7 +562,7 @@
         android:background="@drawable/rounded_corner_view"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
+        android:textColor="#1E1B1B"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

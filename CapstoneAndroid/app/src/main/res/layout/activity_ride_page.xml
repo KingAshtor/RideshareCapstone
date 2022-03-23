@@ -6,158 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RidePage">
 
-    <EditText
-        android:id="@+id/destinationInput"
-        android:layout_width="341dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="11dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_corner_view"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        app:layout_constraintBottom_toTopOf="@+id/subBTN"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DestinationTxt"
-        app:layout_constraintVertical_bias="0.055" />
-
-    <TextView
-        android:id="@+id/pickupTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="310dp"
-        android:layout_marginRight="310dp"
-        android:contentDescription="@string/pickupTxt"
-        android:text="@string/pickupTxt"
-        android:textColor="#004E71"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.551" />
-
-    <EditText
-        android:id="@+id/dateInput"
-        android:layout_width="341dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="5dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_corner_view"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/timeTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTxt"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <TextView
-        android:id="@+id/dateTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="310dp"
-        android:layout_marginRight="310dp"
-        android:contentDescription="@string/dateTxt"
-        android:text="@string/dateTxt"
-        android:textColor="#004E71"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.346" />
-
-    <EditText
-        android:id="@+id/pickupInput"
-        android:layout_width="341dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_corner_view"
-        android:ems="10"
-        android:inputType="textPostalAddress|textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/DestinationTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickupTxt"
-        app:layout_constraintVertical_bias="0.666" />
-
-    <EditText
-        android:id="@+id/timeInput"
-        android:layout_width="341dp"
-        android:layout_height="40dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_corner_view"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.493" />
-
-    <TextView
-        android:id="@+id/DestinationTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="310dp"
-        android:layout_marginRight="310dp"
-        android:contentDescription="@string/DestinationTxt"
-        android:text="@string/DestinationTxt"
-        android:textColor="#004E71"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651" />
-
-    <TextView
-        android:id="@+id/timeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="310dp"
-        android:layout_marginRight="310dp"
-        android:contentDescription="@string/timeTxt"
-        android:text="@string/timeTxt"
-        android:textColor="#004E71"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />
-
-    <Button
-        android:id="@+id/subBTN"
-        android:layout_width="225dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="552dp"
-        android:layout_marginBottom="128dp"
-        android:contentDescription="@string/subBTN"
-        android:text="@string/subBTN"
-        android:textColor="#004E71"
-        android:textSize="18sp"
-        app:backgroundTint="#CFD400"
-        app:cornerRadius="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/rideTxt"
         android:layout_width="242dp"
@@ -196,11 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="57dp"
         android:layout_marginEnd="280dp"
-        android:layout_marginRight="280dp"
-        android:layout_marginBottom="594dp"
         android:contentDescription="@string/PTCLogo"
         android:text="@string/PTCLogo"
         android:textColor="#004E71"
@@ -208,8 +53,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/rideShareLogo"
@@ -226,4 +73,100 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ridesharelogo" />
+
+    <ScrollView
+        android:layout_width="388dp"
+        android:layout_height="346dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.683">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/destinationInput"
+                android:layout_width="341dp"
+                android:layout_height="40dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_corner_view"
+                android:ems="10"
+                android:inputType="textPostalAddress" />
+
+            <TextView
+                android:id="@+id/DestinationTxt"
+                android:layout_width="131dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/DestinationTxt"
+                android:text="@string/DestinationTxt"
+                android:textColor="#004E71"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dateTxt"
+                android:layout_width="186dp"
+                android:layout_height="33dp"
+                android:contentDescription="@string/dateTxt"
+                android:text="@string/dateTxt"
+                android:textColor="#004E71"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/timeInput"
+                android:layout_width="341dp"
+                android:layout_height="40dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_corner_view"
+                android:ems="10"
+                android:inputType="time" />
+
+            <TextView
+                android:id="@+id/pickupTxt"
+                android:layout_width="181dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/pickupTxt"
+                android:text="@string/pickupTxt"
+                android:textColor="#004E71"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/subBTN"
+                android:layout_width="225dp"
+                android:layout_height="51dp"
+                android:contentDescription="@string/subBTN"
+                android:text="@string/subBTN"
+                android:textColor="#004E71"
+                android:textSize="18sp"
+                app:backgroundTint="#CFD400"
+                app:cornerRadius="15sp" />
+
+            <TextView
+                android:id="@+id/timeTxt"
+                android:layout_width="156dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/timeTxt"
+                android:text="@string/timeTxt"
+                android:textColor="#004E71"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/dateInput"
+                android:layout_width="364dp"
+                android:layout_height="40dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_corner_view"
+                android:ems="10"
+                android:inputType="date" />
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
