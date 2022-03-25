@@ -14,18 +14,14 @@ import android.widget.Toast;
 import static com.example.ridesharecapstone.api.retrofit.Api.API;
 import static com.example.ridesharecapstone.api.retrofit.Api.enqueue;
 
-import com.example.ridesharecapstone.api.Route;
-import com.google.gson.JsonObject;
-
-import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.Date;
-
-import retrofit2.Response;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //implements added just for the time/date stuff, not needed for normal views
 public class RidePage extends AppCompatActivity {
-
+    private DatePicker datePicker;
+    private TimePicker timePicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +44,61 @@ public class RidePage extends AppCompatActivity {
         final TextView destState = findViewById(R.id.destState);
         final TextView destZip = findViewById(R.id.destZip);
 
+        //context for enqueues
         final AppCompatActivity context = this; //saves the current context for later use
 
         //assign onClick listener to the submit button
         subBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                enqueue(sendRequest(context, Route.class));
-                sendTheStuff();
+                AtomicInteger pickAddressID = new AtomicInteger();
+                AtomicInteger destAddressID = new AtomicInteger();
+                AtomicInteger routeID = new AtomicInteger();
+
+                //pickAddressID.set(28);
+                //destAddressID.set(29);
+                //routeID.set(16);
+
+
+                //makes the pickupAddress
+                enqueue((pickID, request) -> {
+                    pickAddressID.set(pickID);
+                }, context, API.addAddr(
+                        txt(pickAddressLine1),
+                        txt(pickAddressLine2),
+                        txt(pickCity),
+                        txt(pickState),
+                        txt(pickZip)
+                ), Integer.class);
+
+                //makes the destinationAddress
+                enqueue((destID, request) -> {
+                    destAddressID.set(destID);
+                }, context, API.addAddr(
+                        txt(destAddressLine1),
+                        txt(destAddressLine2),
+                        txt(destCity),
+                        txt(destState),
+                        txt(destZip)
+                ), Integer.class);
+
+                //creates the route
+                enqueue((RouteID, request) -> {
+                    routeID.set(RouteID);
+                }, context, API.addRoute(pickAddressID.intValue(), destAddressID.intValue(), 8), Integer.class);
+
+                toRequestComplete();
+
+                //creates the ride
+                enqueue((rideID, request) -> {
+
+                }, context, API.addRide(routeID.intValue(), 9 /*user goes here*/,
+                        dateTime(datePicker, timePicker)), Integer.class);
+
                 toRequestComplete();
             }
+
+
         });
     }
 
@@ -81,18 +122,6 @@ public class RidePage extends AppCompatActivity {
         calendar.set(year, month, day, hour, minute);
 
         return calendar.getTime();
-    }
-
-//    private void sendRequest(Type body, Response<JsonObject> response){
-//
-//
-//        Toast.makeText(getBaseContext(), "Request Sent", Toast.LENGTH_SHORT).show();
-//
-//    }
-
-    private void sendTheStuff(){
-        API.addRoute(28,29, 8);
-        Toast.makeText(getBaseContext(), "Stuff sent?", Toast.LENGTH_SHORT).show();
     }
 
     //used to swap to the request complete activity
