@@ -8,7 +8,11 @@
         <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/activity_login.xml" value="0.14447463768115942" />
         <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/activity_main.xml" value="0.14447463768115942" />
         <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/activity_profile_page.xml" value="0.14447463768115942" />
-        <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/activity_ride_page.xml" value="0.33" />
+        <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/activity_request_complete.xml" value="0.25" />
+        <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/activity_ride_page.xml" value="0.22" />
+        <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/activity_ride_request_complete.xml" value="0.14447463768115942" />
+        <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/content_request_complete.xml" value="0.25" />
+        <entry key="..\:/Users/ashto/OneDrive - students.ptcollege.edu/PTC Programming/Github/RideshareCapstone/CapstoneAndroid/app/src/main/res/layout/fragment_first.xml" value="0.25" />
       </map>
     </option>
   </component>
