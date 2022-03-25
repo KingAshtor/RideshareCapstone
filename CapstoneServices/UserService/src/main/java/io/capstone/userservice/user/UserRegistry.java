@@ -2,6 +2,9 @@ package io.capstone.userservice.user;
 
 import io.capstone.userservice.Database;
 import io.capstone.userservice.ride.Address;
+import io.capstone.userservice.ride.Ride;
+import io.capstone.userservice.ride.RideRegistry;
+import io.capstone.userservice.ride.Route;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -67,25 +70,58 @@ public class UserRegistry {
                         .map(pair -> format("%s = %s", pair.col, pair.value instanceof String ? "'" + pair.value + "'" : pair.value))
                         .collect(Collectors.joining(", "));
 
-                stmt.execute(format("UPDATE Rideshare.Usr SET %s", setEntries));
+                stmt.execute(format("UPDATE Rideshare.Usr SET %s WHERE usrID = %d", setEntries, user.getUsrID()));
             }
         });
     }
 
-    public void deleteUserById(int id, Database.DataFunction<Integer, Address> getAddress) throws SQLException {
+    public void deleteUserById(int id, Database.DataFunction<Integer, Address> getAddress, RideRegistry registry) throws SQLException {
         final String where = format("usrID = %d", id);
-        database
-                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Role WHERE %s", where)))
+        final User user = userById(id, getAddress);
+        final List<Ride> rides = registry.getRidesByDriverId(id, this::userById);
+        rides.addAll(registry.getRidesByRiderId(id, this::userById));
+        final List<Integer> transactions = database.function(database.connection(), stmt -> {
+            final List<Integer> ret = new ArrayList<>();
+            final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.RideTransaction");
+
+            while (res.next()) {
+                if (res.getInt("riderID") != id) continue;
+                ret.add(res.getInt("transactionID"));
+            }
+
+            return ret;
+        });
+        final List<Integer> routes = database.function(database.connection(), stmt -> {
+            final List<Integer> ret = new ArrayList<>();
+            final ResultSet res = stmt.executeQuery("SELECT * FROM Rideshare.Route");
+
+            while (res.next()) {
+                if (res.getInt("driverID") != id) continue;
+                ret.add(res.getInt("routeID"));
+            }
+
+            return ret;
+        });
+
+
+        database.consumer(database.connection(), stmt -> {
+            for (Integer transaction : transactions) {
+                stmt.execute(format("DELETE FROM Rideshare.RideTransaction WHERE transactionID = %d", transaction));
+            }
+            stmt.execute(format("DELETE FROM Rideshare.RideReceipt WHERE riderID = %d", id));
+        });
+        for (Integer route : routes) {
+            registry.deleteRoute(route);
+        }
+        database.consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.DriverClearance WHERE userID = %d", id)));
+        database.consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Role WHERE %s", where)))
                 .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Usr WHERE %s", where)))
-                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Address WHERE addressID = %d", userById(id, getAddress).getAddress().getAddressID())));
+                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Address WHERE addressID = %d", user.getAddress().getAddressID())));
     }
 
-    public void deleteUserByEmail(String email, Database.DataFunction<Integer, Address> getAddress) throws SQLException {
+    public void deleteUserByEmail(String email, Database.DataFunction<Integer, Address> getAddress, RideRegistry registry) throws SQLException {
         int id = id(email);
-        database
-                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Role WHERE UsrID = %d", id)))
-                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Usr WHERE usrID = %d", id)))
-                .consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.Address WHERE addressID = %d", userById(id, getAddress).getAddress().getAddressID())));
+        deleteUserById(id, getAddress, registry);
     }
 
     public List<User> getUsers(Database.DataFunction<Integer, Address> getAddress) throws SQLException {
@@ -157,6 +193,37 @@ public class UserRegistry {
             }
 
             return roles;
+        });
+    }
+
+    public void addPhoto(int id, String url) throws SQLException {
+        database.consumer(database.connection(), stmt -> {
+            stmt.execute(format("INSERT INTO Rideshare.DriverClearance VALUES(%d, '%s')", id, url));
+        });
+    }
+
+    public void deletePhoto(int id, String url) throws SQLException {
+        database.consumer(database.connection(), stmt -> stmt.execute(format("DELETE FROM Rideshare.DriverClearance WHERE userID = %d AND photoString = '%s'", id, url)));
+    }
+
+    public void addPhoto(String email, String url) throws SQLException {
+        addPhoto(id(email), url);
+    }
+
+    public void deletePhoto(String email, String url) throws SQLException {
+        deletePhoto(id(email), url);
+    }
+
+    public String getPhoto(String email) throws SQLException {
+        final int id = id(email);
+        return database.function(database.connection(), stmt -> {
+            final ResultSet res = stmt.executeQuery(format("SELECT * FROM Rideshare.DriverClearance WHERE userID = %d", id));
+            if (!res.next()) {
+                System.out.println("err");
+                return null;
+            }
+            System.out.println(res.getString("photoString"));
+            return res.getString("photoString");
         });
     }
 

@@ -18,5 +18,5 @@ public class Ride {
     private Route route;
     private User rider;
     private Timestamp dateTime;
-    private boolean completed, accepted;
+    private boolean completed, accepted, started;
 }
