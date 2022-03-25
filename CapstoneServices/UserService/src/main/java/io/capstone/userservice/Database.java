@@ -59,6 +59,9 @@ public class Database {
     public interface DataConsumer<T> {
         void process(T data) throws SQLException;
     }
+    public interface DataBiConsumer<T1, T2> {
+        void process(T1 t1, T2 t2) throws SQLException;
+    }
 
     public interface DataFunction<T, R> {
         R process(T data) throws SQLException;

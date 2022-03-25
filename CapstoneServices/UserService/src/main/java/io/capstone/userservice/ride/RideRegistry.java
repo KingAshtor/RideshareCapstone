@@ -58,18 +58,28 @@ public class RideRegistry {
         System.out.println("==============");
         System.out.println("create route");
         System.out.println("driver: " + driver);
-        final Map<String, Integer> data = new LinkedHashMap<>() {{
+        final Map<String, Object> data = new LinkedHashMap<>() {{
             put("startAddressID", from); put("endAddressID", to);
             put("driverID", driver);
+            put("gasPrice", 0.0);
+            put("cost", 0.0);
             put("repeated", FALSE_BIT);
         }};
-        database.consumer(database.connection(), stmt -> stmt.execute(format("INSERT INTO Rideshare.Route VALUES(%d, %d, %d, 0, %d)", data.values().toArray())));
+        database.consumer(database.connection(), stmt -> stmt.execute(format("INSERT INTO Rideshare.Route VALUES(%d, %d, %d, %f, %f, %d)", data.values().toArray())));
         return ++routeCount;
     }
 
     public void deleteRoute(int id) throws SQLException {
-        database.consumer(database.connection(), stmt ->
-                stmt.execute(format("DELETE FROM Rideshare.Route WHERE routeID = %d", id)));
+        database.consumer(database.connection(), stmt -> {
+            final List<Integer> addresses = new ArrayList<>();
+            final ResultSet set = stmt.executeQuery(format("SELECT * FROM Rideshare.Route WHERE routeID = %d", id));
+            while(set.next()) {
+                addresses.add(set.getInt("startAddressID"));
+                addresses.add(set.getInt("endAddressID"));
+            }
+            stmt.execute(format("DELETE FROM Rideshare.Route WHERE routeID = %d", id));
+            for (Integer address : addresses) stmt.execute(format("DELETE FROM Rideshare.Address WHERE addressID = %d", address));
+        });
     }
 
     public Route getRoute(int id, Database.DataBiFunction<Integer, Database.DataFunction<Integer, Address>, User> byId) throws SQLException {
@@ -115,8 +125,9 @@ public class RideRegistry {
             put("rideDateTime", date.toLocalDateTime().format(formatter));
             put("completed", FALSE_BIT);
             put("accepted", FALSE_BIT);
+            put("started", FALSE_BIT);
         }};
-        database.consumer(database.connection(), stmt -> stmt.execute(format("INSERT INTO Rideshare.RideReceipt VALUES(%d, %d, '%s', 0, %d, %d)", data.values().toArray())));
+        database.consumer(database.connection(), stmt -> stmt.execute(format("INSERT INTO Rideshare.RideReceipt VALUES(%d, %d, '%s', 0, %d, %d, %d)", data.values().toArray())));
         return ++rideCount;
     }
 
@@ -136,11 +147,16 @@ public class RideRegistry {
                 stmt.execute(format("UPDATE Rideshare.RideReceipt SET accepted = %d WHERE rideID = %d", TRUE_BIT, id)));
     }
 
+    public void startRide(int id) throws SQLException {
+        database.consumer(database.connection(), stmt ->
+                stmt.execute(format("UPDATE Rideshare.RideReceipt SET started = %d WHERE rideID = %d", TRUE_BIT, id)));
+    }
+
     public Ride getRide(int id, Database.DataBiFunction<Integer, Database.DataFunction<Integer, Address>, User> byId) throws SQLException {
         return database.function(database.connection(), stmt -> {
             final ResultSet set = stmt.executeQuery(format("SELECT * FROM Rideshare.RideReceipt WHERE rideID = %d", id));
             if (!set.next()) return null;
-            return new Ride(id, getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT);
+            return new Ride(id, getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT, set.getInt("started") == TRUE_BIT);
         });
     }
 
@@ -149,7 +165,7 @@ public class RideRegistry {
             final List<Ride> rides = new ArrayList<>();
             final ResultSet set = stmt.executeQuery(format("SELECT * FROM Rideshare.RideReceipt WHERE riderID = %d", id));
             while(set.next())
-                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT));
+                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT, set.getInt("started") == TRUE_BIT));
             return rides;
         });
     }
@@ -160,7 +176,7 @@ public class RideRegistry {
             final User user = byEmail.process(email, this::getAddress);
             final ResultSet set = stmt.executeQuery(format("SELECT * FROM Rideshare.RideReceipt WHERE riderID = %d", user.getUsrID()));
             while(set.next())
-                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), user, Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT));
+                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), user, Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT, set.getInt("started") == TRUE_BIT));
             return rides;
         });
     }
@@ -172,7 +188,7 @@ public class RideRegistry {
                     "JOIN Rideshare.Route AS route ON receipt.routeID = route.routeID " +
                     "WHERE route.driverID = %d", id));
             while(set.next())
-                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT));
+                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT, set.getInt("started") == TRUE_BIT));
             return rides;
         });
     }
@@ -185,7 +201,7 @@ public class RideRegistry {
                     "JOIN Rideshare.Route AS route ON receipt.routeID = route.routeID " +
                     "WHERE route.driverID = %d", user.getUsrID()));
             while(set.next())
-                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT));
+                rides.add(new Ride(set.getInt("rideID"), getRoute(set.getInt("routeID"), byId), byId.process(set.getInt("riderID"), this::getAddress), Timestamp.valueOf(set.getString("rideDateTime")), set.getInt("completed") == TRUE_BIT, set.getInt("accepted") == TRUE_BIT, set.getInt("started") == TRUE_BIT));
             return rides;
         });
     }
