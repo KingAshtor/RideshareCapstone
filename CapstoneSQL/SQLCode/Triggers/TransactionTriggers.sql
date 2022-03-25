@@ -13,7 +13,7 @@ update Rideshare.Usr
 set balance = (
 	select (made.totalMade - owed.totalOwed)
 	from (
-		select ISNULL(sum(rt.rideTotal), 0) as totalMade
+		select ISNULL(sum(rt.rideTotal - rt.ptcFee), 0) as totalMade
 		from rideshare.RideTransaction rt
 		join rideshare.RideReceipt rr on rr.rideID = rt.rideID
 		join rideshare.Route r on r.routeID = rr.routeID
@@ -46,7 +46,7 @@ update Rideshare.Usr
 set balance = (
 	select (made.totalMade - owed.totalOwed)
 	from (
-		select ISNULL(sum(rt.rideTotal), 0) as totalMade
+		select ISNULL(sum(rt.rideTotal - rt.ptcFee), 0) as totalMade
 		from rideshare.RideTransaction rt
 		join rideshare.RideReceipt rr on rr.rideID = rt.rideID
 		join rideshare.Route r on r.routeID = rr.routeID
@@ -80,7 +80,7 @@ update Rideshare.Usr
 set balance = (
 	select (made.totalMade - owed.totalOwed)
 	from (
-		select ISNULL(sum(rt.rideTotal), 0) as totalMade
+		select ISNULL(sum(rt.rideTotal  - rt.ptcFee), 0) as totalMade
 		from rideshare.RideTransaction rt
 		join rideshare.RideReceipt rr on rr.rideID = rt.rideID
 		join rideshare.Route r on r.routeID = rr.routeID
@@ -114,7 +114,7 @@ update Rideshare.Usr
 set balance = (
 	select (made.totalMade - owed.totalOwed)
 	from (
-		select ISNULL(sum(rt.rideTotal), 0) as totalMade
+		select ISNULL(sum(rt.rideTotal - rt.ptcFee), 0) as totalMade
 		from rideshare.RideTransaction rt
 		join rideshare.RideReceipt rr on rr.rideID = rt.rideID
 		join rideshare.Route r on r.routeID = rr.routeID

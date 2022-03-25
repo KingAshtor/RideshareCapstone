@@ -20,6 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface Api {
@@ -33,12 +34,15 @@ public interface Api {
     @GET("/api/ride/addr/add")
     Call<JsonObject> addAddr(@Query("line1") String line1, @Query("line2") String line2,
                              @Query("city") String city, @Query("state") String state, @Query("zip") String zip);
-
     @GET("/api/ride/addr/del")
     Call<JsonObject> delAddr(@Query("id") int id);
 
     @GET("/api/user/put")
     Call<JsonObject> putUser(@Body String body);
+
+    @POST("/api/ride/route/add")
+    Call<JsonObject> addRoute(@Query("from") int fromAddressID, @Query("to") int toAddressID,
+    @Query("driver") int driverID);
 
      // | Simplify Requests
      // v
@@ -46,7 +50,9 @@ public interface Api {
     Gson GSON = new Gson();
     ExecutorService SERVICE = new ThreadPoolExecutor(1, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     Retrofit RETROFIT = new Retrofit.Builder()
-            .baseUrl("https://6fb7-146-168-217-8.ngrok.io")
+            /////////////////Link goes here ////////////////////////////
+            .baseUrl("https://bc34-2601-547-1001-1130-00-a49a.ngrok.io")
+            //////////////MUST BE HTTPS OR GOOGLE BLOCKS FOR SECURITY/////
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     Api API = RETROFIT.create(Api.class);

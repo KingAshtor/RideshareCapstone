@@ -3,20 +3,38 @@
     package="com.example.ridesharecapstone">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleTask"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.RideshareCapstone">
-        <activity android:name=".RidePage"></activity>
-        <activity android:name=".ProfilePage" />
-        <activity android:name=".Login" />
-        <activity android:name=".FormSubmitted" />
-        <activity android:name=".CreateAccount" />
-        <activity android:name=".MainActivity"
-            android:exported="true">
+        <activity
+            android:name=".RideRequestComplete"
+            android:exported="false" />
+        <activity
+            android:name=".RidePage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfilePage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FormSubmitted"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateAccount"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
