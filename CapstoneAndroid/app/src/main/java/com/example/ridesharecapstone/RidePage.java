@@ -56,8 +56,8 @@ public class RidePage extends AppCompatActivity {
                 AtomicInteger destAddressID = new AtomicInteger();
                 AtomicInteger routeID = new AtomicInteger();
 
-                pickAddressID.set(28);
-                destAddressID.set(29);
+                //pickAddressID.set(28);
+                //destAddressID.set(29);
                 //routeID.set(16);
 
 
@@ -106,6 +106,7 @@ public class RidePage extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
 
                 //creates the ride
                 enqueue((rideID, request) -> {
