@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -55,14 +56,15 @@ public class RidePage extends AppCompatActivity {
                 AtomicInteger destAddressID = new AtomicInteger();
                 AtomicInteger routeID = new AtomicInteger();
 
-                //pickAddressID.set(28);
-                //destAddressID.set(29);
+                pickAddressID.set(28);
+                destAddressID.set(29);
                 //routeID.set(16);
 
 
                 //makes the pickupAddress
                 enqueue((pickID, request) -> {
                     pickAddressID.set(pickID);
+
                 }, context, API.addAddr(
                         txt(pickAddressLine1),
                         txt(pickAddressLine2),
@@ -74,6 +76,7 @@ public class RidePage extends AppCompatActivity {
                 //makes the destinationAddress
                 enqueue((destID, request) -> {
                     destAddressID.set(destID);
+
                 }, context, API.addAddr(
                         txt(destAddressLine1),
                         txt(destAddressLine2),
@@ -82,12 +85,27 @@ public class RidePage extends AppCompatActivity {
                         txt(destZip)
                 ), Integer.class);
 
+                //waits half a second before starting code as this is asynchronous
+                // but needs to run after the addresses calls
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 //creates the route
                 enqueue((RouteID, request) -> {
                     routeID.set(RouteID);
-                }, context, API.addRoute(pickAddressID.intValue(), destAddressID.intValue(), 8), Integer.class);
+                }, context, API.addRoute(pickAddressID.intValue(), destAddressID.intValue(),
+                        8), Integer.class);
 
-                toRequestComplete();
+                //waits half a second before starting code as this is asynchronous
+                // but needs to run after the route call
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 //creates the ride
                 enqueue((rideID, request) -> {

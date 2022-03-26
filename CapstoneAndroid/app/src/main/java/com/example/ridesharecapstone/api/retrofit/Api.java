@@ -58,7 +58,7 @@ public interface Api {
     ExecutorService SERVICE = new ThreadPoolExecutor(1, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     Retrofit RETROFIT = new Retrofit.Builder()
             /////////////////Link goes here ////////////////////////////
-            .baseUrl("https://8f55-2601-547-1001-1130-00-a49a.ngrok.io")
+            .baseUrl("https://7e7c-2601-547-1001-1130-00-a49a.ngrok.io")
             //////////////MUST BE HTTPS OR GOOGLE BLOCKS FOR SECURITY/////
             .addConverterFactory(GsonConverterFactory.create())
             .build();
