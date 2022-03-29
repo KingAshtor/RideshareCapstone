@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity {
             final Api.ApiResponse<JsonObject> userResponse = Api.handle(API.getUser(email), JsonObject.class);
 
             if (userResponse.hasError() || userResponse.getCode() != 200) {
-                toast(this, "An error occurred.");
+                toast(this, "An error occurred. " + userResponse.hasError());
                 return false;
             }
 

@@ -102,10 +102,10 @@
             <DatePicker
                 android:id="@+id/datePicker"
                 android:layout_width="match_parent"
-                android:calendarViewShown="true"
-                android:spinnersShown="false"
+                android:layout_height="0dp"
                 android:layout_weight="4"
-                android:layout_height="0dp" />
+                android:calendarViewShown="true"
+                android:spinnersShown="false" />
 
             <TextView
                 android:id="@+id/timeTxt"
@@ -118,7 +118,7 @@
                 android:textStyle="bold" />
 
             <TimePicker
-                android:id="@+id/time_picker"
+                android:id="@+id/timePicker"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="4" />

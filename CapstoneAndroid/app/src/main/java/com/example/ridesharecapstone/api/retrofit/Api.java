@@ -78,7 +78,7 @@ public interface Api {
 
     @POST("/api/ride/add")
     Call<Integer> addRide(@Query("route") int routeID, @Query("rider") int rider,
-                             @Query("datetime") Date datetime);
+                             @Query("datetime") String datetime);
 
     // | Simplify Requests
     // v
@@ -86,7 +86,7 @@ public interface Api {
     Gson GSON = new Gson();
     Retrofit RETROFIT = new Retrofit.Builder()
             /////////////////Link goes here ////////////////////////////
-            .baseUrl("https://b1bb-146-168-217-8.ngrok.io")
+            .baseUrl("https://b1bb-146-168-217-8.ngrok.io/")
             //////////////MUST BE HTTPS OR GOOGLE BLOCKS FOR SECURITY/////
             .addConverterFactory(GsonConverterFactory.create())
             .addConverterFactory(INTEGER_FACTORY)
@@ -168,6 +168,7 @@ public interface Api {
                 }
             }
         });
+
         final long start = System.currentTimeMillis();
         while(System.currentTimeMillis() - start < 10000 && !ready.get()) {
             try { Thread.sleep(50); }

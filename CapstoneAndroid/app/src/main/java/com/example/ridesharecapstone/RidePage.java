@@ -13,10 +13,17 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import static com.example.ridesharecapstone.api.retrofit.Api.API;
-import static com.example.ridesharecapstone.api.retrofit.Api.enqueue;
+import static com.example.ridesharecapstone.api.retrofit.Api.handle;
+import static com.example.ridesharecapstone.util.ToastUtils.toast;
+
+
+import static java.lang.String.format;
+
+import com.example.ridesharecapstone.api.retrofit.Api;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
 //implements added just for the time/date stuff, not needed for normal views
@@ -45,6 +52,10 @@ public class RidePage extends AppCompatActivity {
         final TextView destState = findViewById(R.id.destState);
         final TextView destZip = findViewById(R.id.destZip);
 
+        //assign dateTime stuff
+        datePicker =  findViewById(R.id.datePicker);
+        timePicker =  findViewById(R.id.timePicker);
+
         //context for enqueues
         final AppCompatActivity context = this; //saves the current context for later use
 
@@ -52,69 +63,57 @@ public class RidePage extends AppCompatActivity {
         subBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AtomicInteger pickAddressID = new AtomicInteger();
-                AtomicInteger destAddressID = new AtomicInteger();
-                AtomicInteger routeID = new AtomicInteger();
-
-                //pickAddressID.set(28);
+                                //pickAddressID.set(28);
                 //destAddressID.set(29);
                 //routeID.set(16);
 
 
                 //makes the pickupAddress
-                enqueue((pickID, request) -> {
-                    pickAddressID.set(pickID);
+                CompletableFuture.supplyAsync(() -> {
+                    Api.ApiResponse<Integer>pickResponse = handle(API.addAddr(
+                            txt(pickAddressLine1),
+                            txt(pickAddressLine2),
+                            txt(pickCity),
+                            txt(pickState),
+                            txt(pickZip)), Integer.class);
+                    if (pickResponse.hasError() || pickResponse.getCode() != 200) {
+                        toast(context, "An error occurred creating pickup addr.");
+                        return false;
+                    }
 
-                }, context, API.addAddr(
-                        txt(pickAddressLine1),
-                        txt(pickAddressLine2),
-                        txt(pickCity),
-                        txt(pickState),
-                        txt(pickZip)
-                ), Integer.class);
+                    Api.ApiResponse<Integer>destResponse = handle(API.addAddr(
+                            txt(destAddressLine1),
+                            txt(destAddressLine2),
+                            txt(destCity),
+                            txt(destState),
+                            txt(destZip)), Integer.class);
+                    if (destResponse.hasError() || destResponse.getCode() != 200) {
+                        toast(context, "An error occurred creating destination addr.");
+                        return false;
+                    }
 
-                //makes the destinationAddress
-                enqueue((destID, request) -> {
-                    destAddressID.set(destID);
-
-                }, context, API.addAddr(
-                        txt(destAddressLine1),
-                        txt(destAddressLine2),
-                        txt(destCity),
-                        txt(destState),
-                        txt(destZip)
-                ), Integer.class);
-
-                //waits half a second before starting code as this is asynchronous
-                // but needs to run after the addresses calls
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                //creates the route
-                enqueue((RouteID, request) -> {
-                    routeID.set(RouteID);
-                }, context, API.addRoute(pickAddressID.intValue(), destAddressID.intValue(),
-                        8), Integer.class);
-
-                //waits half a second before starting code as this is asynchronous
-                // but needs to run after the route call
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                    Api.ApiResponse<Integer>routeResponse = handle(API.addRoute(
+                            pickResponse.getBody(),
+                            destResponse.getBody(),
+                            8), Integer.class);
+                    if (routeResponse.hasError() || routeResponse.getCode() != 200) {
+                        toast(context, "An error occurred creating route.");
+                        return false;
+                    }
 
 
-                //creates the ride
-                enqueue((rideID, request) -> {
+                    Api.ApiResponse<Integer>rideResponse = handle(API.addRide(
+                            routeResponse.getBody(),
+                            17,
+                            dateTime(datePicker, timePicker)),
+                            Integer.class);
+                    if (rideResponse.hasError() || rideResponse.getCode() != 200) {
+                        toast(context, "An error occurred creating ride.");
+                        return false;
+                    }
 
-                }, context, API.addRide(routeID.intValue(), 9 /*user goes here*/,
-                        dateTime(datePicker, timePicker)), Integer.class);
-
-                toRequestComplete();
+                    return true;
+                }).thenAccept((success) -> {if (success) toRequestComplete();});
             }
 
 
@@ -130,17 +129,19 @@ public class RidePage extends AppCompatActivity {
     }
 
     //used to get the date from the date field
-    private Date dateTime(DatePicker datePicker, TimePicker timePicker) {
+    private String dateTime(DatePicker datePicker, TimePicker timePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year =  datePicker.getYear();
         int hour = timePicker.getHour();
         int minute = timePicker.getMinute();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, hour, minute);
+        System.out.println("Formats broke");
+        String output = format("%04d-%02d-%02dT%02d:%02d", year, month, day, hour, minute);
 
-        return calendar.getTime();
+        System.out.println(output);
+
+        return output;
     }
 
     //used to swap to the request complete activity
