@@ -89,4 +89,18 @@ public class User {
     public Set<String> getRoles() {
         return roles;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "usrID=" + usrID +
+                ", email='" + email + '\'' +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", hashedPwd='" + hashedPwd + '\'' +
+                ", salt='" + salt + '\'' +
+                ", address=" + address +
+                ", roles=" + roles +
+                '}';
+    }
 }
