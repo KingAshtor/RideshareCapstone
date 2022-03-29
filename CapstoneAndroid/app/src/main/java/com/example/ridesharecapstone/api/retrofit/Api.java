@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

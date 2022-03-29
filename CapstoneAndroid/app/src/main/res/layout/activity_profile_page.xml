@@ -55,8 +55,8 @@
 
     <TextView
         android:id="@+id/PTCLogo"
-        android:layout_width="119dp"
-        android:layout_height="83dp"
+        android:layout_width="132dp"
+        android:layout_height="93dp"
         android:contentDescription="@string/PTCLogo"
         android:text="@string/PTCLogo"
         android:textColor="#004E71"
@@ -64,10 +64,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.048" />
 
     <ImageView
         android:id="@+id/rideShareLogo"
@@ -84,8 +84,8 @@
 
     <TextView
         android:id="@+id/profileTxt"
-        android:layout_width="94dp"
-        android:layout_height="37dp"
+        android:layout_width="137dp"
+        android:layout_height="61dp"
         android:contentDescription="@string/profileTxt"
         android:gravity="center"
         android:text="@string/profileTxt"

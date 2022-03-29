@@ -55,6 +55,8 @@
     <string name="lNameHint">Last Name</string>
     <string name="fNameHint">First Name</string>
     <string name="AddressAcc">Address</string>
+    <string name="AddressLine1">Address Line 1</string>
+    <string name="AddressLine2">Address Line 2</string>
     <string name="AddressAccHint">Address</string>
     <string name="PTCemailHint">Email</string>
     <string name="cityTxt">City</string>
@@ -77,5 +79,10 @@
     <string name="smokRB">I smoke in the car</string>
     <string name="noSmokRB">No smoking in the car</string>
     <string name="dontSmokRB">I don\'t smoke</string>
-    <string name="submitBtn">SUBMIT</string>
+    <string name="submitBtn">Submit</string>
+    <string name="selectDate">Select Date</string>
+    <string name="selectTime">Select Time</string>
+    <string name="title_activity_request_complete">RequestComplete</string>
+    <string name="returnToProfileBtnTxt">Return to profile</string>
+    <string name="requestComplete">Your ride request is complete!</string>
 </resources>
